@@ -27,7 +27,7 @@ namespace Math_For_Games
             _cooldownTime = cooldownTime;
             Tag = ActorTag.PLAYER;
             SetScale(1, 1, 1);
-            _jumpForce = 3;
+            _jumpForce = 1;
         }
 
         public override void Start()
@@ -92,11 +92,6 @@ namespace Math_For_Games
             {
                 _timeBetweenShots = 0;
                 Bullet bullet = new Bullet(LocalPosition, 50, "Player Bullet", Forward, this, Color.YELLOW, Shape.SPHERE, BulletType.COOKIE);
-                bullet.SetScale(0.3f, 0.3f, 0.3f);
-                //CircleCollider bulletCollider = new CircleCollider(20, bullet);
-                AABBCollider bulletCollider = new AABBCollider(0.3f, 0.3f, bullet);
-                bullet.Collider = bulletCollider;
-                Engine.CurrentScene.AddActor(bullet);
             }
 
         }

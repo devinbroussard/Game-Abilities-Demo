@@ -14,7 +14,8 @@ namespace Math_For_Games
         private float _timeBetweenShots;
         private float _cooldownTime;
 
-        public Enemy(float x, float y, float z, float speed, int health, Actor actor, float maxFov, float cooldownTime, Color color, string name = "Enemy", Shape shape = Shape.SPHERE)
+        public Enemy(float x, float y, float z, float speed, int health, Actor actor, float maxFov, float cooldownTime,
+            Color color, string name = "Enemy", Shape shape = Shape.CUBE)
             : base(x, y, z, speed, health, color, name, shape)
         {
             SetScale(50, 50, 50);

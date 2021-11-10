@@ -43,6 +43,9 @@ namespace Math_For_Games
             MoveDirection = forwardDirection;
             _owner = owner;
             _bulletType = type;
+            SetScale(0.3f, 0.3f, 0.3f);
+            CircleCollider bulletCollider = new CircleCollider(20, this);
+            Engine.CurrentScene.AddActor(this);
         }
 
         /// <summary>
@@ -101,7 +104,7 @@ namespace Math_For_Games
                     if (Enemy.EnemyCount <= 0)
                     {
                         //Create winText UI showing the player that they beat the game...
-                        UIText winText = new UIText(300, 75, 5, Shape.CUBE, "Win Text", Color.WHITE, 200, 200, 50, "You won!");
+                        UIText winText = new UIText(0, 75, 100, Shape.NULL, "Win Text", Color.WHITE, 200, 200, 50, "You won!");
                         //...and add the UI to the scene
                         Engine.CurrentScene.AddActor(winText);
                     }

@@ -10,6 +10,7 @@ namespace Math_For_Games
     {
         private float _width;
         private float _height;
+        private float _length;
 
         /// <summary>
         /// The size of the collider on the x axis
@@ -27,6 +28,12 @@ namespace Math_For_Games
         {
             get { return _height; }
             set { _height = value; }
+        }
+
+        public float Length
+        { 
+            get { return _length;}
+            set { _length = value; }
         }
 
         /// <summary>
@@ -61,11 +68,28 @@ namespace Math_For_Games
             get { return Owner.LocalPosition.Y + Height / 2; }
         }
 
-        public AABBCollider(float width, float height, Actor owner)
+        /// <summary>
+        /// The highest z position of this collider
+        /// </summary>
+        public float Front
+        {
+            get { return Owner.LocalPosition.Z + Width / 2; }
+        }
+
+        /// <summary>
+        /// The lowest z position of this collider
+        /// </summary>
+        public float Back
+        {
+            get { return Owner.LocalPosition.Z - Width / 2; }
+        }
+
+        public AABBCollider(float width, float height, float length, Actor owner)
             : base(owner, ColliderType.AABB)
         {
             _width = width;
             _height = height;
+            _length = length;
             owner.Collider = this;
         }
 
@@ -85,7 +109,9 @@ namespace Math_For_Games
             return other.Left <= Right &&
                 other.Top <= Bottom && 
                 Left <= other.Right && 
-                Top <= other.Bottom;
+                Top <= other.Bottom &&
+                Front >= other.Back &&
+                other.Back <= Front;
         }
 
         public override bool CheckCollisionCircle(CircleCollider other)

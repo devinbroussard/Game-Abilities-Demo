@@ -57,7 +57,7 @@ namespace Math_For_Games
         }
         public bool IsGrounded()
         {
-            if (WorldPosition.Y <= 1)
+            if (WorldPosition.Y <= 1.5)
                 return true;
             else return false;
         }
