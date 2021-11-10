@@ -11,7 +11,7 @@ namespace Math_For_Games
         private float _timeBetweenShots;
         private float _cooldownTime;
         private float _lastHitTime;
-        private float _jumpTime = 100;
+        private float _jumpForce;
         private Vector2 mouseOrigin = new Vector2(Raylib.GetMonitorWidth(1)/2, Raylib.GetMonitorHeight(1)/2);
 
         public float LastHitTime
@@ -27,6 +27,7 @@ namespace Math_For_Games
             _cooldownTime = cooldownTime;
             Tag = ActorTag.PLAYER;
             SetScale(1, 1, 1);
+            _jumpForce = 1;
         }
 
         public override void Start()
@@ -36,70 +37,53 @@ namespace Math_For_Games
         }
 
         public override void Update(float deltaTime)
-        {
-            GetTranslationInput(deltaTime);
-            GetMouseInput();
-            
+        { 
             _lastHitTime += deltaTime;
 
+            GetTranslationInput(deltaTime);
+            GetRotationInput();
+            GetFiringInput(deltaTime);
 
-          
             base.Update(deltaTime);
         }
 
-        public void GetMouseInput()
+        public void GetRotationInput()
         {
             Vector2 mousePosition = new Vector2(Raylib.GetMouseX(), Raylib.GetMouseY());
             Vector2 mouseDelta = mousePosition - mouseOrigin;
             Raylib.SetMousePosition(Raylib.GetMonitorWidth(1) / 2, Raylib.GetMonitorHeight(1) / 2);
 
-            float angle = MathF.Atan2(mouseDelta.Y, mouseDelta.X) * 0.000001f;
-            if (angle < 0) angle += 360;
+            float angle = MathF.Atan2(mouseDelta.Y, mouseDelta.X);
 
-            if (mouseDelta.Magnitude < 0.1f)
-            {
-                angle = 0;
-
-            }
-
-
-            base.Rotate(0, angle, angle);
+            base.Rotate(0, angle * 0.1f, 0);
 
         }
 
         public void GetTranslationInput(float deltaTime)
         {
-            float upDirection = 0;
-
             //Gets the forward and side inputs of the player
             int forwardDirection = Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 - Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
             int sideDirection = Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_A))
                 - Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_D));
 
-            if (Raylib.IsKeyPressed(KeyboardKey.KEY_SPACE))
-                _jumpTime = 0;
+            Velocity = ((forwardDirection * Forward) + (sideDirection * Right) ).Normalized * Speed * deltaTime;
 
-            if (_jumpTime < 0.5)
-            {
-                upDirection = 0.4f;
-                _jumpTime += deltaTime;
-            }
-
-            Velocity = (forwardDirection * Forward) + (sideDirection * Right) + (upDirection * Upwards) * Speed + Accleration * deltaTime;
+            if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && IsGrounded())
+                Velocity = new Vector3(Velocity.X, _jumpForce, Velocity.Y);
+            //ApplyGravity();
 
             base.Translate(Velocity.X, Velocity.Y, Velocity.Z);
         }
 
-        public void getBulletInput(float deltaTime)
+        public void GetFiringInput(float deltaTime)
         {
             //Adds deltaTime to time between shots
             _timeBetweenShots += deltaTime;
 
-            int zDirectionForBullet = -Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_UP))
-                + Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_DOWN));
+            int isFiring = Convert.ToInt32(Raylib.IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON));
 
-            if ((zDirectionForBullet != 0) && (_timeBetweenShots >= _cooldownTime))
+            if ((isFiring > 0) && (_timeBetweenShots >= _cooldownTime))
             {
                 _timeBetweenShots = 0;
                 Bullet bullet = new Bullet(LocalPosition, 50, "Player Bullet", Forward, this, Color.YELLOW, Shape.SPHERE, BulletType.COOKIE);

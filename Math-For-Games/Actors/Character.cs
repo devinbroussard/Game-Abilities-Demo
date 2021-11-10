@@ -10,7 +10,7 @@ namespace Math_For_Games
     {
         private float _speed;
         private Vector3 _velocity;
-        private Vector3 _acceleration;
+        private Vector3 _gravity = new Vector3(0, 2, 0);
         private int _health;
 
         public float Speed
@@ -30,17 +30,22 @@ namespace Math_For_Games
             set { _health = value; }
         }
 
-        public Vector3 Accleration
+        public Vector3 Gravity
         {
-            get 
+            get { return _gravity; }
+            set { _gravity = value; }
+        }
+
+        public void ApplyGravity()
+        {
+            if (!IsGrounded())
             {
-                if (GlobalTransform.M13 >= 1)
-                    _acceleration.Y = -9.81f;
-                else
-                    _acceleration.Y = 0;
-                return _acceleration;
+                Velocity += Gravity;
             }
-            set { _acceleration = value; }
+            else
+            {
+                Velocity = new Vector3(Velocity.X, 0, Velocity.Y);
+            }
         }
 
         public Character(float x, float y, float z, float speed, int health, Color color, string name = "Character", Shape shape = Shape.SPHERE)
@@ -49,6 +54,12 @@ namespace Math_For_Games
             _health = health;
             _speed = speed;
             Velocity = new Vector3(0, 0, 0);
+        }
+        public bool IsGrounded()
+        {
+            if (WorldPosition.Y >= 0)
+                return true;
+            else return false;
         }
     }
 }
