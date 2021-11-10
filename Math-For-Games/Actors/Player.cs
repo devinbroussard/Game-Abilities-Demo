@@ -27,7 +27,7 @@ namespace Math_For_Games
             _cooldownTime = cooldownTime;
             Tag = ActorTag.PLAYER;
             SetScale(1, 1, 1);
-            _jumpForce = 2;
+            _jumpForce = 3;
         }
 
         public override void Start()
@@ -41,22 +41,22 @@ namespace Math_For_Games
             _lastHitTime += deltaTime;
 
             GetTranslationInput(deltaTime);
-            GetRotationInput();
+            GetRotationInput(deltaTime);
             GetFiringInput(deltaTime);
 
             base.Update(deltaTime);
         }
 
-        public void GetRotationInput()
+        public void GetRotationInput(float deltaTime)
         {
             Vector2 mousePosition = new Vector2(Raylib.GetMouseX(), Raylib.GetMouseY());
             Vector2 mouseDelta = mousePosition - mouseOrigin;
-            Raylib.SetMousePosition(Raylib.GetMonitorWidth(1) / 2, Raylib.GetMonitorHeight(1) / 2);
 
             float angle = MathF.Atan2(mouseDelta.Y, mouseDelta.X);
 
-            base.Rotate(0, angle * 0.1f, 0);
-
+            if (mouseDelta.Magnitude > 0)
+                base.Rotate(MathF.Sin(angle) * deltaTime, -MathF.Cos(angle) * deltaTime, 0);
+            Raylib.SetMousePosition(Raylib.GetMonitorWidth(1) / 2, Raylib.GetMonitorHeight(1) / 2);
         }
 
         public void GetTranslationInput(float deltaTime)
