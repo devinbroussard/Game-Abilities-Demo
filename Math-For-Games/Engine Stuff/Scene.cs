@@ -84,8 +84,8 @@ namespace Math_For_Games
         public static void InitializeActors()
         {
             //Initializing scene one actors
-            Player player = new Player(0, 1, 0, 4, 3, 0.5f, Color.SKYBLUE, "Player", Shape.SPHERE);
-            Enemy enemy = new Enemy(0, 1, 3, 2, 3, player, 40, 2, Color.MAROON);
+            Player player = new Player(0, 1, 0, 6, 3, 0.5f, Color.SKYBLUE, "Player", Shape.SPHERE);
+            Enemy enemy = new Enemy(0, 60, 100, 2, 3, player, 40, 2, Color.MAROON);
             Engine.Camera = new Camera(player);
 
             SceneOneActors = new Actor[] { player, enemy, Engine.Camera };

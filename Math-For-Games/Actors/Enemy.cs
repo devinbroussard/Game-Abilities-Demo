@@ -17,7 +17,7 @@ namespace Math_For_Games
         public Enemy(float x, float y, float z, float speed, int health, Actor actor, float maxFov, float cooldownTime, Color color, string name = "Enemy", Shape shape = Shape.SPHERE)
             : base(x, y, z, speed, health, color, name, shape)
         {
-            SetScale(1, 1, 1);
+            SetScale(50, 50, 50);
             _actorToChase = actor;
             _maxFov = maxFov;
             EnemyCount++;

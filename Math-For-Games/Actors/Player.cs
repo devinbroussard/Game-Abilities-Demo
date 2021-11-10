@@ -27,7 +27,7 @@ namespace Math_For_Games
             _cooldownTime = cooldownTime;
             Tag = ActorTag.PLAYER;
             SetScale(1, 1, 1);
-            _jumpForce = 1;
+            _jumpForce = 2;
         }
 
         public override void Start()
@@ -61,17 +61,22 @@ namespace Math_For_Games
 
         public void GetTranslationInput(float deltaTime)
         {
+            if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
+                Speed = 24;
+            else Speed = 6;
+
             //Gets the forward and side inputs of the player
             int forwardDirection = Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 - Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
             int sideDirection = Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_A))
                 - Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_D));
 
-            Velocity = ((forwardDirection * Forward) + (sideDirection * Right) ).Normalized * Speed * deltaTime;
+            Velocity = ((forwardDirection * Forward) + (sideDirection * Right) ).Normalized * Speed * deltaTime + new Vector3(0, Velocity.Y, 0);
+            ApplyGravity();
 
             if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && IsGrounded())
                 Velocity = new Vector3(Velocity.X, _jumpForce, Velocity.Y);
-            //ApplyGravity();
+
 
             base.Translate(Velocity.X, Velocity.Y, Velocity.Z);
         }

@@ -10,7 +10,7 @@ namespace Math_For_Games
     {
         private float _speed;
         private Vector3 _velocity;
-        private Vector3 _gravity = new Vector3(0, 2, 0);
+        private Vector3 _gravity = new Vector3(0, -0.1f, 0);
         private int _health;
 
         public float Speed
@@ -44,7 +44,7 @@ namespace Math_For_Games
             }
             else
             {
-                Velocity = new Vector3(Velocity.X, 0, Velocity.Y);
+                Velocity = new Vector3(Velocity.X, 0, Velocity.Z);
             }
         }
 
@@ -57,7 +57,7 @@ namespace Math_For_Games
         }
         public bool IsGrounded()
         {
-            if (WorldPosition.Y >= 0)
+            if (WorldPosition.Y <= 1)
                 return true;
             else return false;
         }
