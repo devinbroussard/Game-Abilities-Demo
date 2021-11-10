@@ -91,7 +91,7 @@ namespace Math_For_Games
             if ((isFiring > 0) && (_timeBetweenShots >= _cooldownTime))
             {
                 _timeBetweenShots = 0;
-                Bullet bullet = new Bullet(LocalPosition, 50, "Player Bullet", Forward, this, Color.YELLOW, Shape.SPHERE, BulletType.COOKIE);
+                Bullet bullet = new Bullet(LocalPosition, 50, "Player Bullet", Forward, this, Color.YELLOW);
             }
 
         }

@@ -42,8 +42,8 @@ namespace Math_For_Games
             : base(x, y, z, shape, color, name)
         {
             Text = "";
-            Width = 50;
-            Height = 50;
+            Width = -50;
+            Height = -50;
             FontSize = 35;
             FontColor = color;
             Font = Raylib.LoadFont("resources/fonts/alagard.png");
@@ -52,8 +52,9 @@ namespace Math_For_Games
         public override void Draw()
         {
             //Creating rectangle to use inside of Raylib's draw function
-            Rectangle textBox = new Rectangle(LocalPosition.X, LocalPosition.Y, Width, Height);
+            Rectangle textBox = new Rectangle(0, 0, Width, Height);
 
+            Raylib.DrawRectangleRec(textBox, Color.BLACK);
             //Raylib's text box
             Raylib.DrawTextRec(Font, Text, textBox, FontSize, 1, true, FontColor);
         }

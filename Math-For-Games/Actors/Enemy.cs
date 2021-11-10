@@ -55,14 +55,8 @@ namespace Math_For_Games
             if (_timeBetweenShots >= 1 && !IsTargetInSight())
             {
                 Vector3 directionOfBullet = (_actorToChase.LocalPosition - LocalPosition).Normalized;
-
                 _timeBetweenShots = 0;
-               // Bullet bullet = new Bullet(LocalPosition, 500, "Enemy Bullet", directionOfBullet.X, directionOfBullet.Z, this);
-                //bullet.SetScale(30, 30, 30);
-                //CircleCollider bulletCollider = new CircleCollider(20, bullet);
-               // AABBCollider bulletCollider = new AABBCollider(30, 30, bullet);
-               // bullet.Collider = bulletCollider;
-               // Engine.CurrentScene.AddActor(bullet);
+                Bullet bullet = new Bullet(WorldPosition, 2, "Enemy Bullet", Forward, this, Color.WHITE);
             }
 
             base.Update(deltaTime);

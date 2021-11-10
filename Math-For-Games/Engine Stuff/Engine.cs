@@ -64,6 +64,7 @@ namespace Math_For_Games
 
             Scene sceneOne = new Scene();
             sceneOne.AddActor(Scene.SceneOneActors);
+            //sceneOne.AddUIElement(Scene.SceneOneUIElements);
 
             SetCurrentScene(sceneOne);
             _scenes[_currentSceneIndex].Start();
@@ -98,9 +99,11 @@ namespace Math_For_Games
 
             //Adds all actor icons to buffer
             _scenes[_currentSceneIndex].Draw();
-            _scenes[_currentSceneIndex].DrawUI();
 
             Raylib.EndMode3D();
+
+            _scenes[_currentSceneIndex].DrawUI();
+
             Raylib.EndDrawing();
         }
 

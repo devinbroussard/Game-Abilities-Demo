@@ -20,7 +20,6 @@ namespace Math_For_Games
         /// </summary>
         private float _timeAlive;
         private Vector3 _moveDirection;
-        private BulletType _bulletType;
         private Actor _owner;
 
         public Actor Owner
@@ -36,13 +35,12 @@ namespace Math_For_Games
 
 
         public Bullet(Vector3 position, float speed, string name, Vector3 forwardDirection, Actor owner, 
-            Color color, Shape shape, BulletType type = BulletType.GUN)
-            : base(position, shape, color, name)
+            Color color)
+            : base(position, Shape.SPHERE, color, name)
         {
             _speed = speed;
             MoveDirection = forwardDirection;
             _owner = owner;
-            _bulletType = type;
             SetScale(0.3f, 0.3f, 0.3f);
             CircleCollider bulletCollider = new CircleCollider(20, this);
             Engine.CurrentScene.AddActor(this);
@@ -54,9 +52,6 @@ namespace Math_For_Games
         /// <param name="deltaTime"></param>
         public override void Update(float deltaTime)
         {
-            if (_bulletType == BulletType.COOKIE)
-                Rotate(2 * deltaTime, 2 * deltaTime, 2 * deltaTime);
-
             //Adds the delta time to the time that the bullet has been alive in the scene
             _timeAlive += deltaTime;
 

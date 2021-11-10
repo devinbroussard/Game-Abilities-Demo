@@ -16,6 +16,7 @@ namespace Math_For_Games
         /// </summary>
         private Actor[] _UIElements;
         public static Actor[] SceneOneActors;
+        public static Actor[] SceneOneUIElements;
 
         public Scene()
         {
@@ -88,7 +89,10 @@ namespace Math_For_Games
             Enemy enemy = new Enemy(0, 60, 100, 2, 3, player, 40, 2, Color.MAROON);
             Engine.Camera = new Camera(player);
 
+            HealthCounter playerHealthcounter = new HealthCounter(Color.PINK, player);
+
             SceneOneActors = new Actor[] { player, enemy, Engine.Camera };
+            SceneOneUIElements = new Actor[] { playerHealthcounter };
         }
 
         /// <summary>
