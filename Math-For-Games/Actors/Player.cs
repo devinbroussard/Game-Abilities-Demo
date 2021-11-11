@@ -13,6 +13,8 @@ namespace Math_For_Games
         private float _lastHitTime;
         private float _jumpForce;
         private Vector2 mouseOrigin = new Vector2(Raylib.GetMonitorWidth(1)/2, Raylib.GetMonitorHeight(1)/2);
+        private float horizontalSens = 3;
+        private float verticalSens = 1.25f;
 
         public float LastHitTime
         {
@@ -33,6 +35,7 @@ namespace Math_For_Games
         public override void Start()
         {
             CircleCollider playerCollider = new CircleCollider(1, this);
+            Raylib.SetMousePosition(Raylib.GetMonitorWidth(1) / 2, Raylib.GetMonitorHeight(1) / 2);
             base.Start();
         }
 
@@ -55,28 +58,24 @@ namespace Math_For_Games
             float angle = MathF.Atan2(mouseDelta.Y, mouseDelta.X);
 
             if (mouseDelta.Magnitude > 0)
-                base.Rotate(MathF.Sin(angle) * deltaTime, -MathF.Cos(angle) * deltaTime, 0);
+                base.Rotate(MathF.Sin(angle) * deltaTime * verticalSens, -MathF.Cos(angle) * deltaTime * horizontalSens, 0);
             Raylib.SetMousePosition(Raylib.GetMonitorWidth(1) / 2, Raylib.GetMonitorHeight(1) / 2);
+           
         }
 
         public void GetTranslationInput(float deltaTime)
         {
-            if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
-                Speed = 24;
-            else Speed = 6;
-
             //Gets the forward and side inputs of the player
             int forwardDirection = Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 - Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
             int sideDirection = Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_A))
                 - Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_D));
 
-            Velocity = ((forwardDirection * Forward) + (sideDirection * Right) ).Normalized * Speed * deltaTime + new Vector3(0, Velocity.Y, 0);
+            Velocity = ((forwardDirection * Forward) + (sideDirection * Right)).Normalized * Speed * deltaTime + new Vector3(0, Velocity.Y, 0);
             ApplyGravity();
 
             if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && IsGrounded())
                 Velocity = new Vector3(Velocity.X, _jumpForce, Velocity.Y);
-
 
             base.Translate(Velocity.X, Velocity.Y, Velocity.Z);
         }
@@ -93,10 +92,7 @@ namespace Math_For_Games
                 _timeBetweenShots = 0;
                 Bullet bullet = new Bullet(LocalPosition, 50, "Player Bullet", Forward, this, Color.YELLOW);
             }
-
         }
-
-
 
         public void TakeDamage()
         {
@@ -111,6 +107,10 @@ namespace Math_For_Games
 
         public override void Draw()
         {
+            System.Numerics.Vector3 endPos = new System.Numerics.Vector3(WorldPosition.X + Forward.X * 50, WorldPosition.Y + Forward.Y * 50, WorldPosition.Z + Forward.Z * 50);
+            System.Numerics.Vector3 rotation = new System.Numerics.Vector3();
+            Raylib.DrawCircle3D(endPos, 0.3f, rotation, 0, Color.BLACK);
+
             base.Draw();
             //Collider.Draw();
         }

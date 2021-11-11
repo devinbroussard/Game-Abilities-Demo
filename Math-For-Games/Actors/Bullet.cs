@@ -99,9 +99,9 @@ namespace Math_For_Games
                     if (Enemy.EnemyCount <= 0)
                     {
                         //Create winText UI showing the player that they beat the game...
-                        UIText winText = new UIText(0, 75, 100, Shape.NULL, "Win Text", Color.WHITE, 200, 200, 50, "You won!");
+                        UIText winText = new UIText(Raylib.GetMonitorWidth(1)/2, Raylib.GetMonitorHeight(1)/2, 0, Shape.NULL, "Win Text", Color.WHITE, 200, 200, 50, "You won!");
                         //...and add the UI to the scene
-                        Engine.CurrentScene.AddActor(winText);
+                        Engine.CurrentScene.AddUIElement(winText);
                     }
                     //...and destroy the enemy;
                     enemy.DestroySelf();
@@ -122,7 +122,7 @@ namespace Math_For_Games
                 {
                     actor.DestroySelf();
                     UIText loseText = new UIText(300, 75, 10, Shape.CUBE, "Lose Text", Color.WHITE, 200, 200, 50, "You lose!");
-                    Engine.CurrentScene.AddActor(loseText);
+                    Engine.CurrentScene.AddUIElement(loseText);
                 }
 
                 DestroySelf();

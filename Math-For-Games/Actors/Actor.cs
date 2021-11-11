@@ -40,7 +40,6 @@ namespace Math_For_Games
         private Shape _shape;
         private Color _color;
 
-
         //The collider attached to this actor
         public Collider Collider
         {
@@ -251,7 +250,7 @@ namespace Math_For_Games
         {
             System.Numerics.Vector3 position = new System.Numerics.Vector3(WorldPosition.X, WorldPosition.Y, WorldPosition.Z);
 
-            //System.Numerics.Vector3 endPos = new System.Numerics.Vector3(WorldPosition.X + Forward.X * 50, WorldPosition.Y + Forward.Y * 50, WorldPosition.Z + Forward.Z * 50);
+            System.Numerics.Vector3 endPos = new System.Numerics.Vector3(WorldPosition.X + Forward.X * 50, WorldPosition.Y + Forward.Y * 50, WorldPosition.Z + Forward.Z * 50);
 
             switch (_shape)
 
