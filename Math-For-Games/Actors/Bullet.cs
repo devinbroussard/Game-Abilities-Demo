@@ -42,7 +42,7 @@ namespace Math_For_Games
             MoveDirection = forwardDirection;
             _owner = owner;
             SetScale(0.3f, 0.3f, 0.3f);
-            CircleCollider bulletCollider = new CircleCollider(20, this);
+            CircleCollider bulletCollider = new CircleCollider(1, this);
             Engine.CurrentScene.AddActor(this);
         }
 

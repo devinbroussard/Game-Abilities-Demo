@@ -86,7 +86,7 @@ namespace Math_For_Games
         {
             //Initializing scene one actors
             Player player = new Player(0, 1, 0, 6, 3, 0.5f, Color.SKYBLUE, "Player", Shape.SPHERE);
-            Enemy enemy = new Enemy(0, 60, 100, 2, 3, player, 40, 2, Color.MAROON);
+            Enemy enemy = new Enemy(0, 1, 15, 2, 3, player, 40, 2, Color.MAROON);
             Engine.Camera = new Camera(player);
 
             HealthCounter playerHealthcounter = new HealthCounter(Color.PINK, player);

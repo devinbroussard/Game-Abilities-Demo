@@ -13,8 +13,9 @@ namespace Math_For_Games
         private float _lastHitTime;
         private float _jumpForce;
         private Vector2 mouseOrigin = new Vector2(Raylib.GetMonitorWidth(1)/2, Raylib.GetMonitorHeight(1)/2);
-        private float horizontalSens = 3;
+        private float horizontalSens = 2;
         private float verticalSens = 1.25f;
+        private float  _crosshairRotation;
 
         public float LastHitTime
         {
@@ -60,7 +61,7 @@ namespace Math_For_Games
             if (mouseDelta.Magnitude > 0)
                 base.Rotate(MathF.Sin(angle) * deltaTime * verticalSens, -MathF.Cos(angle) * deltaTime * horizontalSens, 0);
             Raylib.SetMousePosition(Raylib.GetMonitorWidth(1) / 2, Raylib.GetMonitorHeight(1) / 2);
-           
+            _crosshairRotation = (float)((-MathF.Cos(angle) * deltaTime * horizontalSens) * 180/Math.PI);
         }
 
         public void GetTranslationInput(float deltaTime)
@@ -107,9 +108,12 @@ namespace Math_For_Games
 
         public override void Draw()
         {
+
+
             System.Numerics.Vector3 endPos = new System.Numerics.Vector3(WorldPosition.X + Forward.X * 50, WorldPosition.Y + Forward.Y * 50, WorldPosition.Z + Forward.Z * 50);
-            System.Numerics.Vector3 rotation = new System.Numerics.Vector3();
-            Raylib.DrawCircle3D(endPos, 0.3f, rotation, 0, Color.BLACK);
+            System.Numerics.Vector3 rotationAxis = new System.Numerics.Vector3(Forward.X, Forward.Y, Forward.Z);
+
+            Raylib.DrawCircle3D(endPos, 0.3f, rotationAxis, _crosshairRotation, Color.BLACK);
 
             base.Draw();
             //Collider.Draw();

@@ -15,10 +15,10 @@ namespace Math_For_Games
         private float _cooldownTime;
 
         public Enemy(float x, float y, float z, float speed, int health, Actor actor, float maxFov, float cooldownTime,
-            Color color, string name = "Enemy", Shape shape = Shape.CUBE)
+            Color color, string name = "Enemy", Shape shape = Shape.SPHERE)
             : base(x, y, z, speed, health, color, name, shape)
         {
-            SetScale(50, 50, 50);
+            SetScale(1, 1, 1);
             _actorToChase = actor;
             _maxFov = maxFov;
             EnemyCount++;
@@ -54,9 +54,10 @@ namespace Math_For_Games
             }
             if (_timeBetweenShots >= 1 && !IsTargetInSight())
             {
+                LookAt(_actorToChase.WorldPosition);
                 Vector3 directionOfBullet = (_actorToChase.LocalPosition - LocalPosition).Normalized;
                 _timeBetweenShots = 0;
-                Bullet bullet = new Bullet(WorldPosition, 2, "Enemy Bullet", Forward, this, Color.WHITE);
+                Bullet bullet = new Bullet(WorldPosition, 10, "Enemy Bullet", Forward, this, Color.WHITE);
             }
 
             base.Update(deltaTime);
