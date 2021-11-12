@@ -4,7 +4,7 @@ using System.Text;
 using Raylib_cs;
 using MathLibrary;
 
-namespace Math_For_Games
+namespace MathForGamesAssessment
 {
     public enum BulletType
     {
@@ -56,7 +56,7 @@ namespace Math_For_Games
             _timeAlive += deltaTime;
 
             //If the time that the bullet has been alive reaches or goes over one second...
-            if (_timeAlive >= 3)
+            if (_timeAlive >= 3 || WorldPosition.Y <= -0.1f)
             {
                 //...destroy the bullet...
                 base.DestroySelf();

@@ -4,7 +4,7 @@ using System.Text;
 using Raylib_cs;
 using MathLibrary;
 
-namespace Math_For_Games
+namespace MathForGamesAssessment
 {
     class Sprite
     {

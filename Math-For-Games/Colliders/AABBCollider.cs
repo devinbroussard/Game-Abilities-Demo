@@ -4,7 +4,7 @@ using System.Text;
 using MathLibrary;
 using Raylib_cs;
 
-namespace Math_For_Games
+namespace MathForGamesAssessment
 {
     class AABBCollider : Collider
     {

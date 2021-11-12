@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Raylib_cs;
 
-namespace Math_For_Games
+namespace MathForGamesAssessment
 {
     class Scene
     {
@@ -85,13 +85,13 @@ namespace Math_For_Games
         public static void InitializeActors()
         {
             //Initializing scene one actors
-            Player player = new Player(0, 1, 0, 6, 3, 0.5f, Color.SKYBLUE, "Player", Shape.SPHERE);
-            Enemy enemy = new Enemy(0, 1, 15, 2, 3, player, 40, 2, Color.MAROON);
+            Player player = new Player(0, 1, 0, 6, 3, 0.3f, Color.SKYBLUE, "Player", Shape.SPHERE);
+            Enemy enemy = new Enemy(0, 1, 30, 2, 3, player, 40, 2, Color.MAROON);
             Engine.Camera = new Camera(player);
 
             HealthCounter playerHealthcounter = new HealthCounter(Color.PINK, player);
 
-            SceneOneActors = new Actor[] { player, enemy, Engine.Camera };
+            SceneOneActors = new Actor[] { enemy, player, Engine.Camera };
             SceneOneUIElements = new Actor[] { playerHealthcounter };
         }
 

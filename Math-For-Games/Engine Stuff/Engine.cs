@@ -6,7 +6,7 @@ using System.Diagnostics;
 using MathLibrary;
 using Raylib_cs;
 
-namespace Math_For_Games
+namespace MathForGamesAssessment
 {
     class Engine
     {

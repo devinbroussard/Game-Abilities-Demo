@@ -4,7 +4,7 @@ using System.Text;
 using MathLibrary;
 using Raylib_cs;
 
-namespace Math_For_Games
+namespace MathForGamesAssessment
 {
     class Player : Character
     {
@@ -13,9 +13,11 @@ namespace Math_For_Games
         private float _lastHitTime;
         private float _jumpForce;
         private Vector2 mouseOrigin = new Vector2(Raylib.GetMonitorWidth(1)/2, Raylib.GetMonitorHeight(1)/2);
-        private float horizontalSens = 2;
+        private float horizontalSens = 2f;
         private float verticalSens = 1.25f;
-        private float  _crosshairRotation;
+        private float _timeBetweenDashes = 100;
+        private Vector4 _baseColor;
+        private float _baseSpeed;
 
         public float LastHitTime
         {
@@ -29,21 +31,24 @@ namespace Math_For_Games
             Speed = speed;
             _cooldownTime = cooldownTime;
             Tag = ActorTag.PLAYER;
-            SetScale(1, 1, 1);
-            _jumpForce = 1;
+            _baseColor = new Vector4(color.r, color.g, color.b, color.a);
+            _baseSpeed = speed;
         }
 
         public override void Start()
         {
+            SetScale(1, 1, 1);
+            _jumpForce = 1;
             CircleCollider playerCollider = new CircleCollider(1, this);
             Raylib.SetMousePosition(Raylib.GetMonitorWidth(1) / 2, Raylib.GetMonitorHeight(1) / 2);
             base.Start();
         }
 
         public override void Update(float deltaTime)
-        { 
+        {
             _lastHitTime += deltaTime;
 
+            GetAbilityInput(deltaTime);
             GetTranslationInput(deltaTime);
             GetRotationInput(deltaTime);
             GetFiringInput(deltaTime);
@@ -61,7 +66,6 @@ namespace Math_For_Games
             if (mouseDelta.Magnitude > 0)
                 base.Rotate(MathF.Sin(angle) * deltaTime * verticalSens, -MathF.Cos(angle) * deltaTime * horizontalSens, 0);
             Raylib.SetMousePosition(Raylib.GetMonitorWidth(1) / 2, Raylib.GetMonitorHeight(1) / 2);
-            _crosshairRotation = (float)((-MathF.Cos(angle) * deltaTime * horizontalSens) * 180/Math.PI);
         }
 
         public void GetTranslationInput(float deltaTime)
@@ -77,6 +81,9 @@ namespace Math_For_Games
 
             if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && IsGrounded())
                 Velocity = new Vector3(Velocity.X, _jumpForce, Velocity.Y);
+
+            if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT))
+                Velocity = new Vector3(Velocity.X * 6, Velocity.Y, Velocity.Z * 6);
 
             base.Translate(Velocity.X, Velocity.Y, Velocity.Z);
         }
@@ -95,6 +102,30 @@ namespace Math_For_Games
             }
         }
 
+        public void GetAbilityInput(float deltaTime)
+        {
+            if (Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT_CONTROL))
+                _timeBetweenDashes = 0;
+
+            DoDashAbility(deltaTime);
+        }
+
+        public bool DoDashAbility(float deltaTime)
+        {
+            if (_timeBetweenDashes < 0.5)
+            {
+                _timeBetweenShots = _cooldownTime - 0.1f;
+                Vector4 dashColor = new Vector4(ShapeColor.r, ShapeColor.g, ShapeColor.b, 100);
+                Speed = 30;
+                SetColor(dashColor);
+                _timeBetweenDashes += deltaTime;
+                CircleCollider dashCollider = new CircleCollider(0, this);
+                return true;
+            }
+            ResetStats();
+            return false;
+        }
+
         public void TakeDamage()
         {
             Health--;
@@ -108,15 +139,19 @@ namespace Math_For_Games
 
         public override void Draw()
         {
+            System.Numerics.Vector3 endPos = new System.Numerics.Vector3(WorldPosition.X + Forward.X * 20, WorldPosition.Y + Forward.Y * 20, WorldPosition.Z + Forward.Z * 20);
 
-
-            System.Numerics.Vector3 endPos = new System.Numerics.Vector3(WorldPosition.X + Forward.X * 50, WorldPosition.Y + Forward.Y * 50, WorldPosition.Z + Forward.Z * 50);
-            System.Numerics.Vector3 rotationAxis = new System.Numerics.Vector3(Forward.X, Forward.Y, Forward.Z);
-
-            Raylib.DrawCircle3D(endPos, 0.3f, rotationAxis, _crosshairRotation, Color.BLACK);
+            Raylib.DrawSphere(endPos, 0.3f, new Color(100, 255, 100, 100));
 
             base.Draw();
             //Collider.Draw();
+        }
+
+        public void ResetStats()
+        {
+            CircleCollider defaultCollider = new CircleCollider(1, this);
+            Speed = _baseSpeed;
+            SetColor(_baseColor);
         }
     }
 }
