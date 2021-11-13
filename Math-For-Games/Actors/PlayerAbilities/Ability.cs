@@ -14,10 +14,33 @@ namespace MathForGamesAssessment
         private float _abilityCollisionRadius;
         private float _abilitySpeed;
         private float _abilityTimer;
+        private float _abilityDuration;
 
-        public Ability(Player player, Vector4 abilityColor, abilityScale, abilityCollisionRadius, abilitySpeed, abilityTimer)
+        public Player Player
+        {
+            get { return _player; }
+            set { _player = value; }
+        }
+
+        public float AbilityDuration
+        {
+            get { return _abilityDuration; }
+        }
+
+        public float AbilityTimer
+        {
+            get { return _abilityTimer; }
+        }
+
+        public Ability(Player player, Vector4 abilityColor, float abilityScale, float abilityCollisionRadius, float abilitySpeed, float abilityTimer, float abilityDuration)
         {
             _player = player;
+            _abilityColor = abilityColor;
+            _abilityScale = abilityScale;
+            _abilityCollisionRadius = abilityCollisionRadius;
+            _abilitySpeed = abilitySpeed;
+            _abilityTimer = abilityTimer;
+            _abilityDuration = abilityDuration;
         }
 
         public void Start()
@@ -28,9 +51,8 @@ namespace MathForGamesAssessment
             _abilityTimer = 0;
         }
 
-        public void Update()
+        public virtual void Update()
         {
-            if (_abilityTimer > )
         }
 
         public void End() { }

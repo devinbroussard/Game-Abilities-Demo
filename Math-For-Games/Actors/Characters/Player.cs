@@ -19,6 +19,12 @@ namespace MathForGamesAssessment
         private Vector4 _baseColor;
         private float _baseSpeed;
 
+        public float TimeBetweenShots
+        {
+            get { return _timeBetweenShots; }
+            set { _timeBetweenShots = value; }
+        }
+
         public float LastHitTime
         {
             get { return _lastHitTime; }
