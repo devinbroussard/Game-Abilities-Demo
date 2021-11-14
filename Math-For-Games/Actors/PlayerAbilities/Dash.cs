@@ -9,17 +9,20 @@ namespace MathForGamesAssessment
     class Dash : Ability
     {
 
-        public Dash(Player player, Vector4 abilityColor, float abilityScale, float abilityCollisionRadius, float abilitySpeed, float abilityTimer, float abilityDuration)
-            : base(player, abilityColor, abilityScale, abilityCollisionRadius, abilitySpeed, abilityTimer, abilityDuration)
+        public Dash(Player player, Vector4 abilityColor, float abilityScale, float abilityCollisionRadius, float abilitySpeed, float abilityDuration)
+            : base(player, abilityColor, abilityScale, abilityCollisionRadius, abilitySpeed, abilityDuration)
         { }
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
             if (AbilityTimer < AbilityDuration)
             {
                 Player.TimeBetweenShots = 0;
-                Player.SetColor()
+                AbilityTimer += deltaTime;
+                return;
             }
+
+            End();
         }
 
 
