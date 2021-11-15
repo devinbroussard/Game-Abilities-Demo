@@ -14,10 +14,10 @@ namespace MathForGamesAssessment
          : base(player, abilityColor, abilityDuration)
         { }
 
-        public override void Start()
+        public void Start(float grenadeHoldTime)
         {    
             base.Start();
-            _grenade = new Grenade(50, 1, Player);
+            _grenade = new Grenade(5 * grenadeHoldTime, 1, Player);
             _grenade.Start();
             Player.TimeBetweenShots = 0;
 

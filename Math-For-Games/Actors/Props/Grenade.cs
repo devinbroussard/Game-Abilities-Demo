@@ -76,7 +76,7 @@ namespace MathForGamesAssessment
 
         public override void End()
         {
-            GrenadeExplosion grenadeExplosion = new GrenadeExplosion(this, 10);
+            GrenadeExplosion grenadeExplosion = new GrenadeExplosion(this, 5);
             Engine.CurrentScene.AddActor(grenadeExplosion);
             DestroySelf();
         }

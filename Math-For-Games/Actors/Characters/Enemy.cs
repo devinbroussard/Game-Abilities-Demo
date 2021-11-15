@@ -64,6 +64,11 @@ namespace MathForGamesAssessment
             
         }
 
+        public override void End()
+        {
+            EnemyCount--;
+        }
+
         public bool IsTargetInSight()
         {
             Vector3 directionOfTarget = (_actorToChase.LocalPosition - LocalPosition).Normalized;

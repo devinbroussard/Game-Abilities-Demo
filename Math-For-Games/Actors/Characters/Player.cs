@@ -67,37 +67,62 @@ namespace MathForGamesAssessment
         /// The time the player must wait between using abilities
         /// </summary>
         private float _abilityCooldown;
+        private bool _grenadeWasPressed;
+        private float _grenadeHoldTime;
         
+        /// <summary>
+        /// Stores the time since an ability was last used
+        /// </summary>
         public float TimeBetweenAbilities
         {
             set { _timeBetweenAbilities = value; }
         }
 
+        /// <summary>
+        /// Stores the time a player must wait between shots
+        /// </summary>
         public float ShotCooldown
         {
             get { return _shotCooldown; }
             set { _shotCooldown = value; }
         }
 
+        /// <summary>
+        /// Stores the ability the player is currently using
+        /// </summary>
         public Ability CurrentAbility
         {
             set { _currentAbility = value; }
         }
 
+        /// <summary>
+        /// Stores the time since a shot was last fired
+        /// </summary>
         public float TimeBetweenShots
         {
             get { return _timeBetweenShots; }
             set { _timeBetweenShots = value; }
         }
 
+        /// <summary>
+        /// Stores the time since a player was last hit by an enemy-
+        /// </summary>
         public float LastHitTime
         {
             get { return _lastHitTime; }
             set { _lastHitTime = value; }
         }
 
-        public Player(float x, float y, float z, float speed, int health, float shotCooldown, float scale, Color color, string name = "Player", Shape shape = Shape.CUBE)
-            : base(x, y, z, speed, health, color, name, shape)
+        /// <param name="x">The local x position of the player</param>
+        /// <param name="y">The local y position of the player</param
+        /// <param name="z">The local z position of the player</param>
+        /// <param name="speed">The speed of the player</param>
+        /// <param name="health">How much health the player will have</param>
+        /// <param name="shotCooldown">The time the player will have to wait between shots</param>
+        /// <param name="scale">The value the player will be scaled by</param>
+        /// <param name="color">The color the player will be</param>
+        public Player(float x, float y, float z, float speed, int health, float shotCooldown, float scale, Color color)
+            : base(x, y, z, speed, health, color, "Player", Shape.SPHERE)
         {
             Speed = speed;
             _shotCooldown = shotCooldown;
@@ -108,6 +133,9 @@ namespace MathForGamesAssessment
             _baseShotCooldown = shotCooldown;
         }
 
+        /// <summary>
+        /// Called on the player's start. Initializes the player's variables and abilities.
+        /// </summary>
         public override void Start()
         {
             _timeBetweenAbilities = 50;
@@ -126,6 +154,10 @@ namespace MathForGamesAssessment
             base.Start();
         }
 
+        /// <summary>
+        /// Called every frame. Gets the user's input and updates the player's position.
+        /// </summary>
+        /// <param name="deltaTime">How much time has passed between frames</param>
         public override void Update(float deltaTime)
         {
             _lastHitTime += deltaTime;
@@ -138,73 +170,101 @@ namespace MathForGamesAssessment
             base.Update(deltaTime);
         }
 
+        /// <summary>
+        /// Gets the player's mouse position and uses that to rotate the player.
+        /// </summary>
+        /// <param name="deltaTime">How much time has passed between frames</param>
         public void GetRotationInput(float deltaTime)
         {
+            //Gets the user's position and stores the difference between that position and the mouse origin
             Vector2 mousePosition = new Vector2(Raylib.GetMouseX(), Raylib.GetMouseY());
             Vector2 mouseDelta = mousePosition - mouseOrigin;
-
+            //Uses the difference to get an angle
             float angle = MathF.Atan2(mouseDelta.Y, mouseDelta.X);
 
+            //Uses that angle to rotate the player and then sets the mouse position back to the origin
             if (mouseDelta.Magnitude > 0)
                 base.Rotate(MathF.Sin(angle) * deltaTime * verticalSens, -MathF.Cos(angle) * deltaTime * horizontalSens, 0);
             Raylib.SetMousePosition(Raylib.GetMonitorWidth(1) / 2, Raylib.GetMonitorHeight(1) / 2);
         }
 
+        /// <summary>
+        /// Gets user input and calculates the player's position accordingly
+        /// </summary>
+        /// <param name="deltaTime">How much time has passed between frames</param>
         public void GetTranslationInput(float deltaTime)
         {
-            //Gets the forward and side inputs of the player
+            //Gets the forward and side inputs from the user
             int forwardDirection = Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_W))
                 - Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_S));
             int sideDirection = Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_A))
                 - Convert.ToInt32(Raylib.IsKeyDown(KeyboardKey.KEY_D));
 
+            //Calculates the player's velocity and then applies gravity to it
             Velocity = ((forwardDirection * Forward) + (sideDirection * Right)).Normalized * Speed * deltaTime + new Vector3(0, Velocity.Y, 0);
             ApplyGravity();
 
+            //Jumps if the user presses the jump key and the player is grounded
             if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && IsGrounded())
                 Velocity = new Vector3(Velocity.X, _jumpForce, Velocity.Y);
 
-            //if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT) && Raylib.IsKeyDown(KeyboardKey.KEY_W) 
-            //    && !Raylib.IsKeyDown(KeyboardKey.KEY_A) && !Raylib.IsKeyDown(KeyboardKey.KEY_D) && _currentAbility == null)
-            //{
-            //    Velocity = new Vector3(Velocity.X * 4, Velocity.Y, Velocity.Z * 4);
-            //    _timeBetweenShots = _shotCooldown - 0.1f;
-            //}
-
+            //Translates the player based on the given velocity
             base.Translate(Velocity.X, Velocity.Y, Velocity.Z);
         }
 
+        /// <summary>
+        /// Gets the player's firing input and spawns bullets accordingly
+        /// </summary>
+        /// <param name="deltaTime">How much time has passed between frames</param>
         public void GetFiringInput(float deltaTime)
         {
-            //Adds deltaTime to time between shots
             _timeBetweenShots += deltaTime;
 
-            int isFiring = Convert.ToInt32(Raylib.IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON));
+            bool isFiring = (Raylib.IsMouseButtonDown(MouseButton.MOUSE_LEFT_BUTTON));
 
-            if ((isFiring > 0) && (_timeBetweenShots >= _shotCooldown))
+            if (isFiring && (_timeBetweenShots >= _shotCooldown))
             {
                 _timeBetweenShots = 0;
                 Bullet bullet = new Bullet(50, this);
             }
         }
 
+        /// <summary>
+        /// Gets the player's input and uses abilities accordingly
+        /// </summary>
+        /// <param name="deltaTime">How much time has passed between frames</param>
         public void GetAbilityInput(float deltaTime)
         {
+            //Activates the dash ability if the ctrl key was pressed
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT_CONTROL) && _timeBetweenAbilities >= _abilityCooldown)
             {
                 _timeBetweenAbilities = 0;
                 _currentAbility = _abilities[0];
                 _currentAbility.Start();
             }
-            else if (Raylib.IsKeyPressed(KeyboardKey.KEY_ONE) && _timeBetweenAbilities >= _abilityCooldown)
+            
+            //Activates the throw grenade ability when the one key is held and released
+            //The throw speed scales with how long the user holds down the key
+            else if (Raylib.IsKeyDown(KeyboardKey.KEY_ONE) && _timeBetweenAbilities >= _abilityCooldown)
+            {
+                _grenadeWasPressed = true;
+                _grenadeHoldTime += 0.2f;
+                Console.WriteLine(_grenadeHoldTime);
+
+            }
+            if (Raylib.IsKeyReleased(KeyboardKey.KEY_ONE) && _grenadeWasPressed)
             {
                 _timeBetweenAbilities = 0;
                 _currentAbility = _abilities[1];
-                _currentAbility.Start();
+
+                ThrowGrenade grenade = (ThrowGrenade)_currentAbility;
+                grenade.Start(_grenadeHoldTime);
+
+                _grenadeWasPressed = false;
+                _grenadeHoldTime = 0;
             }
-            Raylib.IsKeyReleased
 
-
+            //Activates the fortify ability when the two key is pressed
             else if (Raylib.IsKeyPressed(KeyboardKey.KEY_TWO) && _timeBetweenAbilities >= _abilityCooldown)
             {
                 _timeBetweenAbilities = 0;

@@ -86,12 +86,12 @@ namespace MathForGamesAssessment
         {
             //Initializing scene one actors
             Player player = new Player(0, 1, 0, 6, 3, 0.5f, 1, Color.SKYBLUE, "Player", Shape.SPHERE);
-            Enemy enemy = new Enemy(0, 1, 30, 2, 3, player, 40, 2, Color.MAROON);
+            EnemySpawner enemySpawner = new EnemySpawner(player);
             Engine.Camera = new Camera(player);
 
             HealthCounter playerHealthcounter = new HealthCounter(Color.PINK, player);
 
-            SceneOneActors = new Actor[] { enemy, player, Engine.Camera };
+            SceneOneActors = new Actor[] { enemySpawner, player, Engine.Camera };
             SceneOneUIElements = new Actor[] { playerHealthcounter };
         }
 

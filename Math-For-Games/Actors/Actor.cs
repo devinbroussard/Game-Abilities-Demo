@@ -11,7 +11,8 @@ namespace MathForGamesAssessment
         PLAYER,
         ENEMY,
         BULLET,
-        GENERIC
+        GENERIC,
+        SMOKE
     }
 
     public enum Shape
