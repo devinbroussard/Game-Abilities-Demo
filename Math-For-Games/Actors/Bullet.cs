@@ -34,16 +34,21 @@ namespace MathForGamesAssessment
         }
 
 
-        public Bullet(Vector3 position, float speed, string name, Vector3 forwardDirection, Actor owner, 
-            Color color)
-            : base(position, Shape.SPHERE, color, name)
+        public Bullet( float speed, Actor owner)
+            : base(owner.WorldPosition, Shape.SPHERE, Color.YELLOW, "Bullet")
         {
             _speed = speed;
-            MoveDirection = forwardDirection;
+            MoveDirection = owner.Forward;
             _owner = owner;
-            SetScale(0.3f, 0.3f, 0.3f);
-            CircleCollider bulletCollider = new CircleCollider(1, this);
             Engine.CurrentScene.AddActor(this);
+        }
+
+        public override void Start()
+        {
+            SetScale(0.3f, 0.3f, 0.3f);
+            CircleCollider bulletCollider = new CircleCollider(0.4f, this);
+
+            base.Start();
         }
 
         /// <summary>

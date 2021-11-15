@@ -18,16 +18,16 @@ namespace MathForGamesAssessment
             Color color, string name = "Enemy", Shape shape = Shape.SPHERE)
             : base(x, y, z, speed, health, color, name, shape)
         {
-            SetScale(1, 1, 1);
             _actorToChase = actor;
             _maxFov = maxFov;
-            EnemyCount++;
             Tag = ActorTag.ENEMY;
             _cooldownTime = cooldownTime;
         }
 
         public override void Start()
         {
+            SetScale(1, 1, 1);
+            EnemyCount++;
             CircleCollider enemyCollider = new CircleCollider(1, this);
             base.Start();
         }
@@ -57,7 +57,7 @@ namespace MathForGamesAssessment
                 LookAt(_actorToChase.WorldPosition);
                 Vector3 directionOfBullet = (_actorToChase.LocalPosition - LocalPosition).Normalized;
                 _timeBetweenShots = 0;
-                Bullet bullet = new Bullet(WorldPosition, 10, "Enemy Bullet", Forward, this, Color.WHITE);
+                Bullet bullet = new Bullet(10, this);
             }
 
             base.Update(deltaTime);

@@ -45,6 +45,13 @@ namespace MathForGamesAssessment
         /// </summary>
         private float _baseSpeed;
         /// <summary>
+        /// Stores the player's base scale
+        /// </summary>
+        private float _baseScale;
+
+        private float _baseShotCooldown;
+
+        /// <summary>
         /// Stores all of the player's usable abilities
         /// </summary>
         private Ability[] _abilities;
@@ -66,6 +73,12 @@ namespace MathForGamesAssessment
             set { _timeBetweenAbilities = value; }
         }
 
+        public float ShotCooldown
+        {
+            get { return _shotCooldown; }
+            set { _shotCooldown = value; }
+        }
+
         public Ability CurrentAbility
         {
             set { _currentAbility = value; }
@@ -83,7 +96,7 @@ namespace MathForGamesAssessment
             set { _lastHitTime = value; }
         }
 
-        public Player(float x, float y, float z, float speed, int health, float shotCooldown, Color color, string name = "Player", Shape shape = Shape.CUBE)
+        public Player(float x, float y, float z, float speed, int health, float shotCooldown, float scale, Color color, string name = "Player", Shape shape = Shape.CUBE)
             : base(x, y, z, speed, health, color, name, shape)
         {
             Speed = speed;
@@ -91,20 +104,24 @@ namespace MathForGamesAssessment
             Tag = ActorTag.PLAYER;
             _baseColor = new Vector4(color.r, color.g, color.b, color.a);
             _baseSpeed = speed;
+            _baseScale = scale;
+            _baseShotCooldown = shotCooldown;
         }
 
         public override void Start()
         {
             _timeBetweenAbilities = 50;
             _abilityCooldown = 2;
-            SetScale(1, 1, 1);
+            SetScale(_baseScale, _baseScale, _baseScale);
             _jumpForce = 1;
             CircleCollider playerCollider = new CircleCollider(1, this);
             Raylib.SetMousePosition(Raylib.GetMonitorWidth(1) / 2, Raylib.GetMonitorHeight(1) / 2);
 
             Dash dash = new Dash(this, new Vector4(ShapeColor.r, ShapeColor.g, ShapeColor.b, 100), 1, 0, 50, 0.3f);
+            Fortify fortify = new Fortify(this, new Vector4(0, 255, 0, 100), 1.3f, 0.5f, 2);
+            ThrowGrenade throwGrenade = new ThrowGrenade(this, new Vector4(ShapeColor.r, ShapeColor.g, ShapeColor.b, ShapeColor.a), _shotCooldown);
 
-            _abilities = new Ability[] { dash };
+            _abilities = new Ability[] { dash, throwGrenade, fortify };
 
             base.Start();
         }
@@ -147,12 +164,12 @@ namespace MathForGamesAssessment
             if (Raylib.IsKeyDown(KeyboardKey.KEY_SPACE) && IsGrounded())
                 Velocity = new Vector3(Velocity.X, _jumpForce, Velocity.Y);
 
-            if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT) && Raylib.IsKeyDown(KeyboardKey.KEY_W) 
-                && !Raylib.IsKeyDown(KeyboardKey.KEY_A) && !Raylib.IsKeyDown(KeyboardKey.KEY_D) && _currentAbility == null)
-            {
-                Velocity = new Vector3(Velocity.X * 4, Velocity.Y, Velocity.Z * 4);
-                _timeBetweenShots = _shotCooldown - 0.1f;
-            }
+            //if (Raylib.IsKeyDown(KeyboardKey.KEY_LEFT_SHIFT) && Raylib.IsKeyDown(KeyboardKey.KEY_W) 
+            //    && !Raylib.IsKeyDown(KeyboardKey.KEY_A) && !Raylib.IsKeyDown(KeyboardKey.KEY_D) && _currentAbility == null)
+            //{
+            //    Velocity = new Vector3(Velocity.X * 4, Velocity.Y, Velocity.Z * 4);
+            //    _timeBetweenShots = _shotCooldown - 0.1f;
+            //}
 
             base.Translate(Velocity.X, Velocity.Y, Velocity.Z);
         }
@@ -167,7 +184,7 @@ namespace MathForGamesAssessment
             if ((isFiring > 0) && (_timeBetweenShots >= _shotCooldown))
             {
                 _timeBetweenShots = 0;
-                Bullet bullet = new Bullet(LocalPosition, 50, "Player Bullet", Forward, this, Color.YELLOW);
+                Bullet bullet = new Bullet(50, this);
             }
         }
 
@@ -175,8 +192,22 @@ namespace MathForGamesAssessment
         {
             if (Raylib.IsKeyPressed(KeyboardKey.KEY_LEFT_CONTROL) && _timeBetweenAbilities >= _abilityCooldown)
             {
+                _timeBetweenAbilities = 0;
                 _currentAbility = _abilities[0];
-                _abilities[0].Start();
+                _currentAbility.Start();
+            }
+            else if (Raylib.IsKeyPressed(KeyboardKey.KEY_ONE) && _timeBetweenAbilities >= _abilityCooldown)
+            {
+                _timeBetweenAbilities = 0;
+                _currentAbility = _abilities[1];
+                _currentAbility.Start();
+            }
+
+            else if (Raylib.IsKeyPressed(KeyboardKey.KEY_TWO) && _timeBetweenAbilities >= _abilityCooldown)
+            {
+                _timeBetweenAbilities = 0;
+                _currentAbility = _abilities[2];
+                _currentAbility.Start();
             }
 
             if (_currentAbility != null)
@@ -207,6 +238,8 @@ namespace MathForGamesAssessment
 
         public void ResetStats()
         {
+            ShotCooldown = _baseShotCooldown;
+            SetScale(_baseScale, _baseScale, _baseScale);
             CircleCollider defaultCollider = new CircleCollider(1, this);
             Speed = _baseSpeed;
             SetColor(_baseColor);

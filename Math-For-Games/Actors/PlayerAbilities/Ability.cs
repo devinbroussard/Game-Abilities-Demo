@@ -37,6 +37,24 @@ namespace MathForGamesAssessment
         /// </summary>
         private float _abilityDuration;
 
+        public float AbilityScale
+        {
+            get { return _abilityScale; }
+            set { _abilityScale = value; }
+        }
+
+        public float AbilityCollisionRadius
+        {
+            get { return _abilityCollisionRadius; }
+            set { _abilityCollisionRadius = value; }
+        }
+
+        public float AbilitySpeed
+        {
+            get { return _abilitySpeed; }
+            set { _abilitySpeed = value; }
+        }
+
         /// <summary>
         /// Allows inherriting abilities to use the player
         /// </summary>
@@ -57,21 +75,16 @@ namespace MathForGamesAssessment
             set { _abilityTimer = value; }
         }
 
-        public Ability(Player player, Vector4 abilityColor, float abilityScale, float abilityCollisionRadius, float abilitySpeed, float abilityDuration)
+        public Ability(Player player, Vector4 color, float duration)
         {
             _player = player;
-            _abilityColor = abilityColor;
-            _abilityScale = abilityScale;
-            _abilityCollisionRadius = abilityCollisionRadius;
-            _abilitySpeed = abilitySpeed;
-            _abilityDuration = abilityDuration;
+            _abilityColor = color;
+            _abilityDuration = duration;
         }
 
-        public void Start()
+        public virtual void Start()
         {
             _player.SetColor(_abilityColor);
-            _player.Speed = _abilitySpeed;
-            _player.SetScale(_abilityScale, _abilityScale, _abilityScale);
             _abilityTimer = 0;
         }
 

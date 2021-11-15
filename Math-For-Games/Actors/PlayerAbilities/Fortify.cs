@@ -1,45 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Raylib_cs;
 using MathLibrary;
+using Raylib_cs;
 
 namespace MathForGamesAssessment
 {
-    class Dash : Ability
+    class Fortify : Ability
     {
-
-        public Dash(Player player, Vector4 abilityColor, float abilityScale, float abilityCollisionRadius, float abilitySpeed, float abilityDuration)
-            : base(player, abilityColor, abilityDuration)
+        public Fortify(Player player, Vector4 color, float scale, float speed, float duration)
+            : base(player, color, duration)
         {
-            AbilityScale = abilityScale;
-            AbilityCollisionRadius = abilityCollisionRadius;
-            AbilitySpeed = abilitySpeed;
+            AbilityScale = scale;
+            AbilitySpeed = speed;
         }
 
         public override void Start()
         {
+            Player.ShotCooldown = 0.05f;
             base.Start();
 
             Player.SetScale(AbilityScale, AbilityScale, AbilityScale);
             Player.Speed = AbilitySpeed;
-            CircleCollider playerCollider = new CircleCollider(AbilityCollisionRadius, Player);
         }
 
         public override void Update(float deltaTime)
         {
-           
-
             if (AbilityTimer < AbilityDuration)
             {
-                Player.TimeBetweenShots = 0;
                 AbilityTimer += deltaTime;
                 return;
             }
 
             base.End();
         }
-
-
     }
 }
