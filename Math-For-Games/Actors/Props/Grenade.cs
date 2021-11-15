@@ -47,10 +47,12 @@ namespace MathForGamesAssessment
         
             base.Translate(_velocity.X, _velocity.Y, _velocity.Z);
 
-            if (WorldPosition.Y <= 0)
+            base.Update(deltaTime);
+
+
+            if (WorldPosition.Y <= -1)
                 End();
 
-            base.Update(deltaTime);
 
         }
 
@@ -74,7 +76,8 @@ namespace MathForGamesAssessment
 
         public override void End()
         {
-
+            GrenadeExplosion grenadeExplosion = new GrenadeExplosion(this, 10);
+            Engine.CurrentScene.AddActor(grenadeExplosion);
             DestroySelf();
         }
     }

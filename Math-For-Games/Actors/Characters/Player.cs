@@ -202,6 +202,8 @@ namespace MathForGamesAssessment
                 _currentAbility = _abilities[1];
                 _currentAbility.Start();
             }
+            Raylib.IsKeyReleased
+
 
             else if (Raylib.IsKeyPressed(KeyboardKey.KEY_TWO) && _timeBetweenAbilities >= _abilityCooldown)
             {
