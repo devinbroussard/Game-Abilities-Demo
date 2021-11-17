@@ -10,9 +10,13 @@ namespace MathForGamesAssessment
 {
     class Engine
     {
+        //Initializing variables
         private static bool _applicationShouldClose = false;
         private static int _currentSceneIndex;
         private Scene[] _scenes = new Scene[0];
+        /// <summary>
+        /// Stopwatch used to track deltaTime 
+        /// </summary>
         private Stopwatch _stopwatch = new Stopwatch();
         public static Scene CurrentScene;
         public static Camera Camera;
@@ -57,33 +61,28 @@ namespace MathForGamesAssessment
         /// </summary>
         private void Start()
         {
-            _stopwatch.Start();
+            _stopwatch.Start(); //Starts the stopwatch
 
-            InitializeWindow();
-            Scene.InitializeActors();
+            InitializeWindow(); //Initializes the window that the application uses
+            Scene.InitializeActors(); //Initializes the scenes' actors
 
-            Scene sceneOne = new Scene();
-            sceneOne.AddActor(Scene.SceneOneActors);
-            sceneOne.AddUIElement(Scene.SceneOneUIElements);
+            Scene sceneOne = new Scene(); //Creates the first scene
+            sceneOne.AddActor(Scene.SceneOneActors); //Adds the scene one actors to the scene
+            sceneOne.AddUIElement(Scene.SceneOneUIElements); //Adds the scene one UI elements to the scene
+            SetCurrentScene(sceneOne); //Sets the current scene to be the first scene
 
-            SetCurrentScene(sceneOne);
-            _scenes[_currentSceneIndex].Start();
+            _scenes[_currentSceneIndex].Start(); //Starts the first scene
         }
 
         /// <summary>
-        /// Called everytime the game loops
+        /// Calls the scene's update functions every frame.
         /// </summary>
         private void Update(float deltaTime)
         {
-            if (Raylib.IsKeyPressed(KeyboardKey.KEY_Q))
-                Raylib.ToggleFullscreen();
+            if (Raylib.IsKeyPressed(KeyboardKey.KEY_ESCAPE))
+                CloseApplication();
             _scenes[_currentSceneIndex].Update(deltaTime);
             _scenes[_currentSceneIndex].UpdateUI(deltaTime);
-
-
-
-            while (Console.KeyAvailable)
-                Console.ReadKey(true);
         }
 
         /// <summary>
@@ -95,7 +94,7 @@ namespace MathForGamesAssessment
             Raylib.BeginMode3D(Camera.Camera3D);
 
             Raylib.ClearBackground(Color.DARKGRAY);
-            Raylib.DrawGrid(500, 1);
+            Raylib.DrawGrid(10, 10); //Used to visualize the floor in the game
 
             //Adds all actor icons to buffer
             _scenes[_currentSceneIndex].Draw();
@@ -113,7 +112,8 @@ namespace MathForGamesAssessment
         private void End()
         {
             _scenes[_currentSceneIndex].End();
-            Raylib.CloseWindow();
+
+                Raylib.CloseWindow();
         }
 
         /// <summary>
@@ -140,20 +140,27 @@ namespace MathForGamesAssessment
             return _scenes.Length - 1;
         }
 
+        /// <summary>
+        /// Adds and sets the current scene to the scene given
+        /// </summary>
+        /// <param name="scene">The scene given</param>
         public void SetCurrentScene(Scene scene)
         {
             _currentSceneIndex = AddScene(scene);
             CurrentScene = _scenes[_currentSceneIndex];
         }
 
+        /// <summary>
+        /// Initializes the window that raylib will use during the game
+        /// </summary>
         public void InitializeWindow()
         {
             int height = Raylib.GetMonitorHeight(1);
             int width = Raylib.GetMonitorWidth(1);
             //Create a window using rayLib
             Raylib.InitWindow(width, height, "Math For Games");
+            Raylib.ToggleFullscreen();
             Raylib.DisableCursor();
-            Raylib.MaximizeWindow();
             Raylib.SetTargetFPS(60);
         }
 

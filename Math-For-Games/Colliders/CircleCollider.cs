@@ -10,12 +10,17 @@ namespace MathForGamesAssessment
     {
         private float _collisionRadius;
 
+        /// <summary>
+        /// The collision radius of the collider
+        /// </summary>
         public float CollisionRadius
         {
             get { return _collisionRadius; }
             set { _collisionRadius = value; }
         }
 
+        /// <param name="collisionRadius">The collision radius of the collider.</param>
+        /// <param name="owner">The actor that owns the collider.</param>
         public CircleCollider(float collisionRadius, Actor owner) 
             : base(owner, ColliderType.CIRCLE)
         {
@@ -72,12 +77,6 @@ namespace MathForGamesAssessment
 
             //Returns true if the circle's collision radius is greater than or equal to the distance from the closest point
             return distanceFromClosestPoint <= CollisionRadius;
-        }
-
-        public override void Draw()
-        {
-            base.Draw();
-            Raylib.DrawCircleLines((int)Owner.LocalPosition.X, (int)Owner.LocalPosition.Y, CollisionRadius, Color.GREEN);
         }
     }
 }

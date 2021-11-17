@@ -114,14 +114,14 @@ namespace MathForGamesAssessment
                 other.Back <= Front;
         }
 
+        /// <summary>
+        /// Checks for collision with a circle collider
+        /// </summary>
+        /// <param name="other">The circle collider that collision will be checked with.</param>
+        /// <returns></returns>
         public override bool CheckCollisionCircle(CircleCollider other)
         {
             return other.CheckCollisionAABB(this);
-        }
-
-        public override void Draw()
-        {
-            Raylib.DrawRectangleLines((int)Left, (int)Top, (int)Width, (int)Height, Color.PURPLE);
         }
     }
 }

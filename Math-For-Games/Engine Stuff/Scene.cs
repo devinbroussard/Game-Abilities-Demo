@@ -108,17 +108,18 @@ namespace MathForGamesAssessment
         public static void InitializeActors()
         {
             //Initializing scene one actors
-            Player player = new Player(0, 1, 0, 6, 3, 0.5f, 1, Color.SKYBLUE);
+            Player player = new Player(0, 1, 0, 6, 0.5f, 1, Color.SKYBLUE);
             EnemySpawner enemySpawner = new EnemySpawner(player);
             Engine.Camera = new Camera(player);
 
-            //Initializing scene one UI elements
-            UIText dashAbilityUI = new UIText(0, 20, 10, Shape.CUBE, "Lose Text", Color.DARKBLUE, 800, 200, 50, "DASH: CTRL");
-            UIText throwGrenadeUI = new UIText(0, 70, 10, Shape.CUBE, "Lose Text", Color.DARKBLUE, 800, 200, 50, "THROW GRENADE: ONE");
-            UIText fortifyAbilityUI = new UIText(0, 120, 10, Shape.CUBE, "Lose Text", Color.DARKBLUE, 800, 200, 50, "FORTIFY: TWO");
+            //Initializing scene one UI elements 
+            UIText leaveGameUI = new UIText(0, 20, 10, Shape.CUBE, "Lose Text", Color.PURPLE, 800, 200, 50, "LEAVE GAME: ESC");
+            UIText dashAbilityUI = new UIText(0, 90, 10, Shape.CUBE, "Lose Text", Color.PURPLE, 800, 200, 50, "DASH: CTRL");
+            UIText throwGrenadeUI = new UIText(0, 160, 10, Shape.CUBE, "Lose Text", Color.PURPLE, 800, 200, 50, "THROW GRENADE: ONE");
+            UIText fortifyAbilityUI = new UIText(0, 230, 10, Shape.CUBE, "Lose Text", Color.PURPLE, 800, 200, 50, "FORTIFY: TWO");
 
             SceneOneActors = new Actor[] { enemySpawner, player, Engine.Camera };
-            SceneOneUIElements = new Actor[] { dashAbilityUI, throwGrenadeUI, fortifyAbilityUI };
+            SceneOneUIElements = new Actor[] { dashAbilityUI, throwGrenadeUI, fortifyAbilityUI, leaveGameUI };
         }
 
         /// <summary>
@@ -190,6 +191,10 @@ namespace MathForGamesAssessment
             _UIElements = tempArray;
         }
 
+        /// <summary>
+        /// Adds an array of UI elements to the_UIEelements array
+        /// </summary>
+        /// <param name="actors">The array of UI elements</param>
         public void AddUIElement(Actor[] actors)
         {
             //Create a temp array larger than the original

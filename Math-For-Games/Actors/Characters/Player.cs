@@ -124,8 +124,8 @@ namespace MathForGamesAssessment
         /// <param name="shotCooldown">The time the player will have to wait between shots</param>
         /// <param name="scale">The value the player will be scaled by</param>
         /// <param name="color">The color the player will be</param>
-        public Player(float x, float y, float z, float speed, int health, float shotCooldown, float scale, Color color)
-            : base(x, y, z, speed, health, color, "Player", Shape.SPHERE)
+        public Player(float x, float y, float z, float speed, float shotCooldown, float scale, Color color)
+            : base(x, y, z, speed, 3, color, "Player", Shape.SPHERE)
         {
             Speed = speed;
             _shotCooldown = shotCooldown;
@@ -141,6 +141,8 @@ namespace MathForGamesAssessment
         /// </summary>
         public override void Start()
         {
+            ResetStats();
+            Health = 3;
             _timeBetweenAbilities = 50;
             _abilityCooldown = 2;
             SetScale(_baseScale, _baseScale, _baseScale);

@@ -90,10 +90,11 @@ namespace MathForGamesAssessment
         }
 
         /// <summary>
-        /// 
+        /// Called when the grenade ends
         /// </summary>
         public override void End()
         {
+            //Creates a new grenade explosion, adds it to the scene, and deletes the grenade
             GrenadeExplosion grenadeExplosion = new GrenadeExplosion(this, 5);
             Engine.CurrentScene.AddActor(grenadeExplosion);
             DestroySelf();
