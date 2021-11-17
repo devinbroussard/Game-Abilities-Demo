@@ -64,7 +64,7 @@ namespace MathForGamesAssessment
 
             Scene sceneOne = new Scene();
             sceneOne.AddActor(Scene.SceneOneActors);
-            //sceneOne.AddUIElement(Scene.SceneOneUIElements);
+            sceneOne.AddUIElement(Scene.SceneOneUIElements);
 
             SetCurrentScene(sceneOne);
             _scenes[_currentSceneIndex].Start();

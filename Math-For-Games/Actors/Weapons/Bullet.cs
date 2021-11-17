@@ -6,11 +6,6 @@ using MathLibrary;
 
 namespace MathForGamesAssessment
 {
-    public enum BulletType
-    {
-        COOKIE,
-        GUN 
-    }
     class Bullet : Actor
     {
         private float _speed;
@@ -22,32 +17,49 @@ namespace MathForGamesAssessment
         private Vector3 _moveDirection;
         private Actor _owner;
 
+        /// <summary>
+        /// The actor that fired this bullet
+        /// </summary>
         public Actor Owner
         {
             get { return _owner; }
         }
 
+        /// <summary>
+        /// The direction that the bullet is moving
+        /// </summary>
         public Vector3 MoveDirection
         {
             get { return _moveDirection; }
             set { _moveDirection = value; }
         }
 
-
+        /// <summary>
+        /// Called whenever a new instance is created
+        /// </summary>
+        /// <param name="speed">Sets the speed of the bullet</param>
+        /// <param name="owner">Sets the owner of the bullet</param>
         public Bullet( float speed, Actor owner)
             : base(owner.WorldPosition, Shape.SPHERE, Color.YELLOW, "Bullet")
         {
             _speed = speed;
             MoveDirection = owner.Forward;
             _owner = owner;
+            //Adds this bullet to the scene
             Engine.CurrentScene.AddActor(this);
         }
 
+        /// <summary>
+        /// Called whenever a new bullet is added to the scene
+        /// </summary>
         public override void Start()
         {
+            //Sets the scale of the bullet
             SetScale(0.3f, 0.3f, 0.3f);
+            //Adds a collider to the bullet
             CircleCollider bulletCollider = new CircleCollider(0.4f, this);
 
+            //Calls the actor's start function
             base.Start();
         }
 
@@ -92,41 +104,35 @@ namespace MathForGamesAssessment
                 //...If the enemy's health is above 0...
                 if (enemy.Health > 0)
                     //...Tell the enemy to take damage
-                    enemy.TakeDamage();
+                    enemy.Health--;
 
                 //...If the enemy's health is 0...
                 if (enemy.Health == 0)
                 {
+                    Enemy.EnemiesKilled++;
                     //Decrement the static enemy count...
                     Enemy.EnemyCount--;
-
-                    //If the enemy count is 0...
-                    if (Enemy.EnemyCount <= 0)
-                    {
-                        //Create winText UI showing the player that they beat the game...
-                        UIText winText = new UIText(Raylib.GetMonitorWidth(1)/2, Raylib.GetMonitorHeight(1)/2, 0, Shape.NULL, "Win Text", Color.WHITE, 200, 200, 50, "You won!");
-                        //...and add the UI to the scene
-                        Engine.CurrentScene.AddUIElement(winText);
-                    }
                     //...and destroy the enemy;
                     enemy.DestroySelf();
                 }
 
                 DestroySelf();
             }
+            //Otherwise, if the actor is a player, and the owner isn't a player...
             else if (actor.Tag == ActorTag.PLAYER && Owner.Tag != ActorTag.PLAYER)
             {
+                //...cast the actor as a player
                 Player player = (Player)actor;
 
+                //If the player's health is above zero
                 if (player.Health > 0 && player.LastHitTime > 1)
                 {
-                    player.LastHitTime = 0;
-                    player.Health--;
+                    player.TakeDamage();
                 }
                 if (player.Health <= 0)
                 {
                     actor.DestroySelf();
-                    UIText loseText = new UIText(300, 75, 10, Shape.CUBE, "Lose Text", Color.WHITE, 200, 200, 50, "You lose!");
+                    UIText loseText = new UIText(0, 20, 10, Shape.CUBE, "Lose Text", Color.WHITE, 200, 200, 50, "You died!");
                     Engine.CurrentScene.AddUIElement(loseText);
                 }
 
@@ -135,7 +141,6 @@ namespace MathForGamesAssessment
             else if (actor.Tag == ActorTag.BULLET && Owner.Tag != actor.Tag)
             {
                 DestroySelf();
-                actor.DestroySelf();
             }
         }
 

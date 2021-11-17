@@ -6,9 +6,10 @@ namespace MathLibrary
 {
     public struct Vector3
     {
-        public float X;
-        public float Y;
-        public float Z;
+        /// <summary>
+        /// The values of the matrix
+        /// </summary>
+        public float X, Y, Z;
 
         public Vector3(float x, float y, float z)
         {
@@ -103,7 +104,7 @@ namespace MathLibrary
         /// <summary>
         /// Multiplies the vector's X and Y values by the scalar
         /// </summary>
-        /// <param name="vec2">The vector that is being scaled</param>
+        /// <param name="vec3>The vector that is being scaled</param>
         /// <param name="scalar">The value that the vector will be scaled by</param>
         /// <returns>A new scaled vector</returns>
         public static Vector3 operator *(Vector3 vec3, float scalar)
@@ -114,7 +115,7 @@ namespace MathLibrary
         /// <summary>
         /// Multiplies the vector's X and Y values by the scalar
         /// </summary>
-        /// <param name="vec2">The vector that is being scaled</param>
+        /// <param name="vec3">The vector that is being scaled</param>
         /// <param name="scalar">The value that the vector will be scaled by</param>
         /// <returns>A new scaled vector</returns>
         public static Vector3 operator *(float scalar, Vector3 vec3)
@@ -125,7 +126,7 @@ namespace MathLibrary
         /// <summary>
         /// Divides the vector's X and Y values by the scalar
         /// </summary>
-        /// <param name="vec2">The vector that is being scaled</param>
+        /// <param name="vec3">The vector that is being scaled</param>
         /// <param name="scalar">The value that the vector will be scaled by</param>
         /// <returns>A new scaled vector</returns>
         public static Vector3 operator /(Vector3 vec3, float scalar)
@@ -136,7 +137,7 @@ namespace MathLibrary
         /// <summary>
         /// Divides the vector's X and Y values by the scalar
         /// </summary>
-        /// <param name="vec2">The vector that is being scaled</param>
+        /// <param name="vec3">The vector that is being scaled</param>
         /// <param name="scalar">The value that the vector will be scaled by</param>
         /// <returns>A new scaled vector</returns>
         public static Vector3 operator /(float scalar, Vector3 vec3)
@@ -165,6 +166,13 @@ namespace MathLibrary
         {
             return lhs.X != rhs.X || lhs.Y != rhs.Y || lhs.Z != rhs.Z;
         }
+
+        /// <summary>
+        /// Multiplies a vector and matrix together
+        /// </summary>
+        /// <param name="vec3">The vector that will be multiplied</param>
+        /// <param name="mat3">The matrix that will be multiplied</param>
+        /// <returns>A new vector multiplied by the matrix</returns>
         public static Vector3 operator *(Vector3 vec3, Matrix3 mat3)
         {
             return new Vector3(
@@ -173,7 +181,12 @@ namespace MathLibrary
                 ((vec3.X * mat3.M20) + (vec3.Y * mat3.M21) + (vec3.Z * mat3.M22)));
         }
 
-    
+        /// <summary>
+        /// Multiplies a matrix and vector togehter
+        /// </summary>
+        /// <param name="mat3">The matrix that will be multiplied</param>
+        /// <param name="vec3">The vector that will be multiplied</param>
+        /// <returns>A new vector that is multiplied by the matrix</returns>
         public static Vector3 operator *(Matrix3 mat3, Vector3 vec3)
         {
             return new Vector3(

@@ -13,37 +13,56 @@ namespace MathForGamesAssessment
         private Vector3 _gravity = new Vector3(0, -0.1f, 0);
         private int _health;
 
+        /// <summary>
+        /// A speed variable that the character's velocity is scaled by
+        /// </summary>
         public float Speed
         {
             get { return _speed; }
             set { _speed = value; }
         }
+        /// <summary>
+        /// The vector3 that the character will be translated by
+        /// </summary>
         public Vector3 Velocity
         {
             get { return _velocity; }
             set { _velocity = value; }
         }
 
+        /// <summary>
+        /// The health of the character
+        /// </summary>
         public int Health
         {
             get { return _health; }
             set { _health = value; }
         }
 
+        /// <summary>
+        /// The gravity that will be applied to the character
+        /// Is constantly applied on the character's velocity
+        /// </summary>
         public Vector3 Gravity
         {
             get { return _gravity; }
             set { _gravity = value; }
         }
 
+        /// <summary>
+        /// Applies gravity to the character
+        /// </summary>
         public void ApplyGravity()
         {
+            //If the character is not grounded..
             if (!IsGrounded())
             {
+                //Add gravity the the player's current velocity
                 Velocity += Gravity;
             }
             else
             {
+                //otherwise, set the player's downward velocity to be 0
                 Velocity = new Vector3(Velocity.X, 0, Velocity.Z);
             }
         }
@@ -55,8 +74,14 @@ namespace MathForGamesAssessment
             _speed = speed;
             Velocity = new Vector3(0, 0, 0);
         }
+
+        /// <summary>
+        /// Determines whether or not the character is on the ground.
+        /// </summary>
+        /// <returns>True or false depending if the character is on the ground or not.</returns>
         public bool IsGrounded()
         {
+            //If the player's position on the world transform is less than or equal to 1.5, return true
             if (WorldPosition.Y <= 1.5)
                 return true;
             else return false;

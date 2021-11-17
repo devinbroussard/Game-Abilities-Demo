@@ -4,7 +4,13 @@ namespace MathLibrary
 {
     public struct Vector2
     {
+        /// <summary>
+        /// The left hand side of the vector
+        /// </summary>
         public float X;
+        /// <summary>
+        /// The right hand side of the vector
+        /// </summary>
         public float Y;
 
         public Vector2(float x, float y)

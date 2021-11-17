@@ -37,18 +37,27 @@ namespace MathForGamesAssessment
         /// </summary>
         private float _abilityDuration;
 
+        /// <summary>
+        /// The size the player will be during the ability
+        /// </summary>
         public float AbilityScale
         {
             get { return _abilityScale; }
             set { _abilityScale = value; }
         }
 
+        /// <summary>
+        /// The collision radius of the player during the ability
+        /// </summary>
         public float AbilityCollisionRadius
         {
             get { return _abilityCollisionRadius; }
             set { _abilityCollisionRadius = value; }
         }
 
+        /// <summary>
+        /// The speed of the player during the ability
+        /// </summary>
         public float AbilitySpeed
         {
             get { return _abilitySpeed; }
@@ -64,11 +73,17 @@ namespace MathForGamesAssessment
             set { _player = value; }
         }
 
+        /// <summary>
+        /// How long the ability will last
+        /// </summary>
         public float AbilityDuration
         {
             get { return _abilityDuration; }
         }
 
+        /// <summary>
+        /// How long has passed since the ability started
+        /// </summary>
         public float AbilityTimer
         {
             get { return _abilityTimer; }
@@ -82,16 +97,26 @@ namespace MathForGamesAssessment
             _abilityDuration = duration;
         }
 
+        /// <summary>
+        /// Called when the ability starts
+        /// </summary>
         public virtual void Start()
         {
             _player.SetColor(_abilityColor);
             _abilityTimer = 0;
         }
 
+        /// <summary>
+        /// Called every frame while the ability is active
+        /// </summary>
+        /// <param name="deltaTime">The time that has passed between frames</param>
         public virtual void Update(float deltaTime)
         {
         }
 
+        /// <summary>
+        /// Called at the end of the ability
+        /// </summary>
         public void End() 
         {
             _player.ResetStats();

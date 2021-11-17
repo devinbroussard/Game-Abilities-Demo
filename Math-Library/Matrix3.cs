@@ -4,10 +4,20 @@ using System.Text;
 
 namespace MathLibrary
 {
+    /// <summary>
+    /// The class that defines 3x3 Matrices
+    /// </summary>
     public struct Matrix3
     {
+        /// <summary>
+        /// Variables that store the values of the matrix
+        /// The first number is the row, and the second is the column
+        /// </summary>
         public float M00, M01, M02, M10, M11, M12, M20, M21, M22;
 
+        /// <summary>
+        /// Assigns the values of the matrix to the input given
+        /// </summary>
         public Matrix3(
             float m00, float m01, float m02,
             float m10, float m11, float m12,
@@ -86,6 +96,12 @@ namespace MathLibrary
                 );
         }
 
+        /// <summary>
+        /// Adds two matrices together
+        /// </summary>
+        /// <param name="lhs">The left hand side of the operation</param>
+        /// <param name="rhs">The right hand side of the operation</param>
+        /// <returns>The result of the two added matrices</returns>
         public static Matrix3 operator +(Matrix3 lhs, Matrix3 rhs)
         {
             return new Matrix3(
@@ -95,6 +111,12 @@ namespace MathLibrary
                 );
         }
 
+        /// <summary>
+        /// Subtracts one matrix from another
+        /// </summary>
+        /// <param name="lhs">The left hand matrix</param>
+        /// <param name="rhs">The right hand matrix, and the matrix the lhs will be subtracted by</param>
+        /// <returns>The rhs matrix subtracted from the lhs matrix</returns>
         public static Matrix3 operator -(Matrix3 lhs, Matrix3 rhs)
         {
             return new Matrix3(
@@ -104,6 +126,12 @@ namespace MathLibrary
                 );
         }
 
+        /// <summary>
+        /// Multiplies two matrices together
+        /// </summary>
+        /// <param name="lhs">The left hand side of the operation</param>
+        /// <param name="rhs">The right hand side of the operation</param>
+        /// <returns>The result of the two matrices multiplied</returns>
         public static Matrix3 operator *(Matrix3 lhs, Matrix3 rhs)
         {
             return new Matrix3(

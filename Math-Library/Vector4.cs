@@ -6,10 +6,10 @@ namespace MathLibrary
 {
     public struct Vector4
     {
-        public float X;
-        public float Y;
-        public float Z;
-        public float W;
+        /// <summary>
+        /// The values of the matrix
+        /// </summary>
+        public float X, Y, Z, W;
 
         public Vector4(float x, float y, float z, float w)
         {
@@ -102,7 +102,7 @@ namespace MathLibrary
         /// <summary>
         /// Multiplies the vector's X and Y values by the scalar
         /// </summary>
-        /// <param name="vec2">The vector that is being scaled</param>
+        /// <param name="vec4">The vector that is being scaled</param>
         /// <param name="scalar">The value that the vector will be scaled by</param>
         /// <returns>A new scaled vector</returns>
         public static Vector4 operator *(Vector4 vec4, float scalar)
@@ -113,7 +113,7 @@ namespace MathLibrary
         /// <summary>
         /// Multiplies the vector's X and Y values by the scalar
         /// </summary>
-        /// <param name="vec2">The vector that is being scaled</param>
+        /// <param name="vec4">The vector that is being scaled</param>
         /// <param name="scalar">The value that the vector will be scaled by</param>
         /// <returns>A new scaled vector</returns>
         public static Vector4 operator *(float scalar, Vector4 vec4)
@@ -121,6 +121,12 @@ namespace MathLibrary
             return new Vector4 { X = vec4.X * scalar, Y = vec4.Y * scalar, Z = vec4.Z * scalar, W = vec4.W * scalar };
         }
 
+        /// <summary>
+        /// Multplies a vector4 by a matrix4
+        /// </summary>
+        /// <param name="vec4">The vector</param>
+        /// <param name="mat4">The Matrix</param>
+        /// <returns>A new vector that is multiplied by the matrix4</returns>
         public static Vector4 operator *(Vector4 vec4, Matrix4 mat4)
         {
             return new Vector4(
@@ -130,6 +136,12 @@ namespace MathLibrary
                 ((vec4.X * mat4.M30) + (vec4.Y * mat4.M31) + (vec4.Z * mat4.M32) + (vec4.W * mat4.M33)));
         }
 
+        /// <summary>
+        /// Multiplies a vector4 by a matrix4
+        /// </summary>
+        /// <param name="mat4">The matrix4</param>
+        /// <param name="vec4">The vector4</param>
+        /// <returns>A vector that is the result of the vec4 multplied by the mat4</returns>
         public static Vector4 operator *(Matrix4 mat4, Vector4 vec4)
         {
             return new Vector4(
@@ -142,7 +154,7 @@ namespace MathLibrary
         /// <summary>
         /// Divides the vector's X and Y values by the scalar
         /// </summary>
-        /// <param name="vec2">The vector that is being scaled</param>
+        /// <param name="vec4">The vector that is being scaled</param>
         /// <param name="scalar">The value that the vector will be scaled by</param>
         /// <returns>A new scaled vector</returns>
         public static Vector4 operator /(Vector4 vec4, float scalar)
@@ -153,7 +165,7 @@ namespace MathLibrary
         /// <summary>
         /// Divides the vector's X and Y values by the scalar
         /// </summary>
-        /// <param name="vec2">The vector that is being scaled</param>
+        /// <param name="vec4">The vector that is being scaled</param>
         /// <param name="scalar">The value that the vector will be scaled by</param>
         /// <returns>A new scaled vector</returns>
         public static Vector4 operator /(float scalar, Vector4 vec4)

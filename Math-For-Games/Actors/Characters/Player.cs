@@ -68,6 +68,9 @@ namespace MathForGamesAssessment
         /// </summary>
         private float _abilityCooldown;
         private bool _grenadeWasPressed;
+        /// <summary>
+        /// The time the throw grenade ability key was held
+        /// </summary>
         private float _grenadeHoldTime;
         
         /// <summary>
@@ -242,7 +245,7 @@ namespace MathForGamesAssessment
                 _currentAbility = _abilities[0];
                 _currentAbility.Start();
             }
-            
+
             //Activates the throw grenade ability when the one key is held and released
             //The throw speed scales with how long the user holds down the key
             else if (Raylib.IsKeyDown(KeyboardKey.KEY_ONE) && _timeBetweenAbilities >= _abilityCooldown)
@@ -277,17 +280,28 @@ namespace MathForGamesAssessment
             else _timeBetweenAbilities += deltaTime;
         }
 
-        public void TakeDamage()
-        {
-            Health--;
-        }
-
+        /// <summary>
+        /// Gets called on collision with another actor
+        /// </summary>
+        /// <param name="actor"></param>
         public override void OnCollision(Actor actor)
         {
             Console.WriteLine("Collision");
 
         }
 
+        /// <summary>
+        /// Makes the player take damage, and sets their last hit time to 0
+        /// </summary>
+        public void TakeDamage()
+        {
+            LastHitTime = 0;
+            Health--;
+        }
+
+        /// <summary>
+        /// Draw's the player and the player's crosshair to the screen
+        /// </summary>
         public override void Draw()
         {
             System.Numerics.Vector3 endPos = new System.Numerics.Vector3(WorldPosition.X + Forward.X * 30, WorldPosition.Y + Forward.Y * 30, WorldPosition.Z + Forward.Z * 30);
@@ -298,6 +312,9 @@ namespace MathForGamesAssessment
             //Collider.Draw();
         }
 
+        /// <summary>
+        /// Resets the player's stats back to their default
+        /// </summary>
         public void ResetStats()
         {
             ShotCooldown = _baseShotCooldown;

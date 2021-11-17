@@ -6,15 +6,20 @@ using Raylib_cs;
 
 namespace MathForGamesAssessment
 {
+    /// <summary>
+    /// Tag applied to an actor to determine what kind of actor it is
+    /// </summary>
     public enum ActorTag
     {
         PLAYER,
         ENEMY,
         BULLET,
-        GENERIC,
-        SMOKE
+        GENERIC
     }
 
+    /// <summary>
+    /// Shape applied to an actor to determine what to draw to the screen
+    /// </summary>
     public enum Shape
     {
         CUBE,
@@ -25,11 +30,13 @@ namespace MathForGamesAssessment
     class Actor
     {
         private string _name;
+        //Stores whether or not the actor's start function has been called
         private bool _started;
         /// <summary>
         /// The forward facing direction of the actor
         /// </summary>
         private ActorTag _tag;
+        //Stores the actor's collider
         private Collider _collider;
         private Matrix4 _globalTransform = Matrix4.Identity;
         private Matrix4 _localTransform = Matrix4.Identity;
@@ -48,42 +55,66 @@ namespace MathForGamesAssessment
             set { _collider = value; }
         }
 
+        /// <summary>
+        /// The color the actor's shape will be drawn with
+        /// </summary>
         public Color ShapeColor
         {
             get { return _color; }
         }
 
+        /// <summary>
+        /// The actor's tag
+        /// </summary>
         public ActorTag Tag
         {
             get { return _tag; }
             set { _tag = value; }
         }
 
+        /// <summary>
+        /// The actor's forward direction on the global axis
+        /// </summary>
         public Vector3 Forward
         {
             get { return new Vector3(_rotation.M02, _rotation.M12, _rotation.M22); }
         }
 
+        /// <summary>
+        /// The actor's right position on the global axis
+        /// </summary>
         public Vector3 Right
         {
             get { return new Vector3(_rotation.M00, _rotation.M10, _rotation.M20); }
         }
 
+        /// <summary>
+        ///The actor's upward position on the global axis
+        /// </summary>
         public Vector3 Upwards
         {
             get { return new Vector3(_rotation.M01, _rotation.M11, _rotation.M21); }
         }
 
+        /// <summary>
+        /// The magnitude of the actor's X scale
+        /// </summary>
         public float ScaleX
         {
             get { return new Vector3(_scale.M00, _scale.M10, _scale.M20).Magnitude; }
         }
 
+        /// <summary>
+        /// The magnitude of the actor's Y scale
+        /// </summary>
         public float ScaleY
         {
             get { return new Vector3(_scale.M01, _scale.M11, _scale.M12).Magnitude; }
         }
 
+        /// <summary>
+        /// The magnitude of the actor's Y scale 
+        /// </summary>
         public float ScaleZ
         {
             get { return new Vector3(_scale.M02, _scale.M12, _scale.M22).Magnitude; }
@@ -97,12 +128,18 @@ namespace MathForGamesAssessment
             get { return _started; }
         }
 
+        /// <summary>
+        /// The actor's position on their local transform
+        /// </summary>
         public Vector3 LocalPosition
         {
             get { return new Vector3(_translation.M03, _translation.M13, _translation.M23); }
             set { SetTranslation(value.X, value.Y, value.Z); }
         }
 
+        /// <summary>
+        /// The actor's position on the global transform
+        /// </summary>
         public Vector3 WorldPosition
         {
             //Return the global transform's T column
@@ -123,29 +160,45 @@ namespace MathForGamesAssessment
             }
         }
 
+        /// <summary>
+        /// The actor's global transform
+        /// Used to draw to the screen and check for collision
+        /// </summary>
         public Matrix4 GlobalTransform
         {
             get { return _globalTransform; } 
             private set { _globalTransform = value; }
         }
 
+        /// <summary>
+        /// The actor's local transform in relation to it's parent
+        /// </summary>
         public Matrix4 LocalTransform
         {
             get { return _localTransform; } 
             private set { _localTransform = value; }
         }
 
+        /// <summary>
+        /// The actor's parent in the matrix heirarchy 
+        /// </summary>
         public Actor Parent
         {
             get { return _parent; }
             set { _parent = value; }
         }
 
+        /// <summary>
+        /// An array that stores all of the actor's children
+        /// </summary>
         public Actor[] Children
         {
             get { return _children; }
         }
 
+        /// <param name="x">x position of the actor</param>
+        /// <param name="y">y position of the actor</param>
+        /// <param name="z">z position of the actor</param>
         public Actor(float x, float y, float z, Shape shape, Color color, string name = "Actor", ActorTag tag = ActorTag.GENERIC) :
             this(new Vector3 { X = x, Y = y, Z = z}, shape, color, name, tag)
         {
@@ -165,6 +218,9 @@ namespace MathForGamesAssessment
             _shape = Shape.NULL;
         }
 
+        /// <summary>
+        /// Updates the local and global transforms of the actor.
+        /// </summary>
         public void UpdateTransforms()
         {
             //Updates the local transform by combining the seperate transforms
@@ -237,30 +293,44 @@ namespace MathForGamesAssessment
             return removedActor;
         }
 
+        /// <summary>
+        /// Called on start
+        /// Marks started variable as true
+        /// </summary>
         public virtual void Start() 
         {
             _started = true;
         }
 
+        /// <summary>
+        /// Called every frame
+        /// </summary>
+        /// <param name="deltaTime">The time between frames</param>
         public virtual void Update(float deltaTime) 
         {
             UpdateTransforms();
         }
 
+        /// <summary>
+        /// Draws the actor to the screen
+        /// </summary>
         public virtual void Draw() 
         {
+            //The actor's world position
             System.Numerics.Vector3 position = new System.Numerics.Vector3(WorldPosition.X, WorldPosition.Y, WorldPosition.Z);
 
-            System.Numerics.Vector3 endPos = new System.Numerics.Vector3(WorldPosition.X + Forward.X * 50, WorldPosition.Y + Forward.Y * 50, WorldPosition.Z + Forward.Z * 50);
+            //This can be used to visualize the actor's forward rotation
+            //System.Numerics.Vector3 endPos = new System.Numerics.Vector3(WorldPosition.X + Forward.X * 50, WorldPosition.Y + Forward.Y * 50, WorldPosition.Z + Forward.Z * 50);
 
+            //Uses the actor's Shape to determine what needs to be drawn to the screen, and then draws it
             switch (_shape)
-
             {
                 case Shape.CUBE:
                     Raylib.DrawCube(position, ScaleX, ScaleY, ScaleZ, ShapeColor);
                     break;
                 case Shape.SPHERE:
                     Raylib.DrawSphere(position, ScaleX, ShapeColor);
+                    //This can be used to visualize the actor's forward rotation
                     //Raylib.DrawLine3D(position, endPos, Color.RED);
                     break;
                 case Shape.NULL:
@@ -268,18 +338,26 @@ namespace MathForGamesAssessment
             }
         }
 
+        /// <summary>
+        /// Called when an actor ends
+        /// </summary>
         public virtual void End()
         { }
 
+        /// <summary>
+        /// Removes the actor from the current scene
+        /// </summary>
         public void DestroySelf()
         {
             Engine.CurrentScene.RemoveActor(this);
         }
 
+        /// <summary>
+        /// Is called on colision with another actor
+        /// </summary>
+        /// <param name="actor">The actor that collision was made with</param>
         public virtual void OnCollision(Actor actor)
-        {
-
-        }
+        { }
 
         /// <summary>
         /// Checks if this actor collided with another actor
@@ -318,7 +396,9 @@ namespace MathForGamesAssessment
         /// <summary>
         /// Set the rotation of the actor.
         /// </summary>
-        /// <param name="radians">The angle of the rotation in radians.</param>
+        /// <param name="radiansX">The angle of the rotation in radians.</param>
+        /// <param name="radiansY">The angle of the rotation in radians.</param>
+        /// <param name="radiansZ">The angle of the rotation in radians.</param>
         public void SetRotation(float radiansX, float radiansY, float radiansZ)
         {
             Matrix4 rotationX = Matrix4.CreateRotationX(radiansX);
@@ -415,14 +495,21 @@ namespace MathForGamesAssessment
                 newXAxis.Y, newYAxis.Y, direction.Y, 0,
                 newXAxis.Z, newYAxis.Z, direction.Z, 0,
                 0, 0, 0, 1);
-
         }
 
+        /// <summary>
+        /// Sets the actor's color
+        /// </summary>
+        /// <param name="color">The raylib color that the actor will be changed to.</param>
         public void SetColor(Color color)
         {
             _color = color;
         }
 
+        /// <summary>
+        /// Sets the actor's color
+        /// </summary>
+        /// <param name="colorValue">The vector4 that the actor will be changed to on the rgba color model</param>
         public void SetColor(Vector4 colorValue)
         {
             _color = new Color((int)colorValue.X, (int)colorValue.Y, (int)colorValue.Z, (int)colorValue.W);
