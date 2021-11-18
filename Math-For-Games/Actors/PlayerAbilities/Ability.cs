@@ -90,6 +90,9 @@ namespace MathForGamesAssessment
             set { _abilityTimer = value; }
         }
 
+        /// <param name="player">The player that will use the actor</param>
+        /// <param name="color">The color the player will turn during the ability</param>
+        /// <param name="duration">The duration of the ability</param>
         public Ability(Player player, Vector4 color, float duration)
         {
             _player = player;

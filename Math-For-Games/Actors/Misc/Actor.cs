@@ -204,6 +204,11 @@ namespace MathForGamesAssessment
         {
         }
 
+        /// <param name="position">The local position of the actor</param>
+        /// <param name="shape">The shape of the actor</param>
+        /// <param name="color">The color of the shape</param>
+        /// <param name="name">The actor's name</param>
+        /// <param name="tag">The tag that the actor will be labeled with</param>
         public Actor(Vector3 position, Shape shape, Color color, string name = "Actor", ActorTag tag = ActorTag.GENERIC )
         {
             SetColor(color);

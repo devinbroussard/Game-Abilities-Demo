@@ -8,7 +8,6 @@ namespace MathForGamesAssessment
 {
     class Dash : Ability
     {
-
         public Dash(Player player, Vector4 abilityColor, float abilityScale, float abilityCollisionRadius, float abilitySpeed, float abilityDuration)
             : base(player, abilityColor, abilityDuration)
         {

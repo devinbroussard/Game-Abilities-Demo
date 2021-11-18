@@ -92,6 +92,8 @@ namespace MathForGamesAssessment
                 _UIElements[i].Draw();
         }
 
+
+
         /// <summary>
         /// Called at the end of a scene
         /// Removes all actors from the scene

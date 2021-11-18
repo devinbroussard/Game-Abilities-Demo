@@ -67,6 +67,14 @@ namespace MathForGamesAssessment
             }
         }
 
+        /// <param name="x">The X position of the actor on the local transform</param>
+        /// <param name="y">The Y position of the actor on the local transform</param>
+        /// <param name="z">The Z position of the actor on the local transform</param>
+        /// <param name="speed">The speed of the character</param>
+        /// <param name="health">The health of the character</param>
+        /// <param name="color">The color of the character's shape</param>
+        /// <param name="name">The name of the actor</param>
+        /// <param name="shape">The shape of the actor</param>
         public Character(float x, float y, float z, float speed, int health, Color color, string name = "Character", Shape shape = Shape.SPHERE)
              : base(x, y, z, shape, color, name)
         {
