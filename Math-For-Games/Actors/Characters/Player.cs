@@ -27,7 +27,7 @@ namespace MathForGamesAssessment
         /// <summary>
         /// Stores the center position of the screen
         /// </summary>
-        private Vector2 mouseOrigin = new Vector2(Raylib.GetMonitorWidth(1)/2, Raylib.GetMonitorHeight(1)/2);
+        private Vector2 _mouseOrigin = new Vector2(Raylib.GetMonitorWidth(1)/2, Raylib.GetMonitorHeight(1)/2);
         /// <summary>
         /// Stores the horizontal sensitivity of the mouse
         /// </summary>
@@ -183,7 +183,7 @@ namespace MathForGamesAssessment
         {
             //Gets the user's position and stores the difference between that position and the mouse origin
             Vector2 mousePosition = new Vector2(Raylib.GetMouseX(), Raylib.GetMouseY());
-            Vector2 mouseDelta = mousePosition - mouseOrigin;
+            Vector2 mouseDelta = mousePosition - _mouseOrigin;
             //Uses the difference to get an angle
             float angle = MathF.Atan2(mouseDelta.Y, mouseDelta.X);
 

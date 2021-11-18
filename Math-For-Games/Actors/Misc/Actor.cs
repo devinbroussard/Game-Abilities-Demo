@@ -32,9 +32,6 @@ namespace MathForGamesAssessment
         private string _name;
         //Stores whether or not the actor's start function has been called
         private bool _started;
-        /// <summary>
-        /// The forward facing direction of the actor
-        /// </summary>
         private ActorTag _tag;
         //Stores the actor's collider
         private Collider _collider;
@@ -113,7 +110,7 @@ namespace MathForGamesAssessment
         }
 
         /// <summary>
-        /// The magnitude of the actor's Y scale 
+        /// The magnitude of the actor's Z scale 
         /// </summary>
         public float ScaleZ
         {
@@ -171,7 +168,7 @@ namespace MathForGamesAssessment
         }
 
         /// <summary>
-        /// The actor's local transform in relation to it's parent
+        /// The actor's local transform in relation to its parent
         /// </summary>
         public Matrix4 LocalTransform
         {

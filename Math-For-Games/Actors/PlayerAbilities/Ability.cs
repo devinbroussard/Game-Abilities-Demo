@@ -33,7 +33,7 @@ namespace MathForGamesAssessment
         /// </summary>
         private float _abilityTimer;
         /// <summary>
-        /// Stores how long the ability will be 
+        /// Stores how long the ability will be active
         /// </summary>
         private float _abilityDuration;
 

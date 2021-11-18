@@ -117,12 +117,5 @@ namespace MathForGamesAssessment
         public override void OnCollision(Actor actor)
         {
         }
-
-        public override void Draw()
-        {
-            base.Draw();
-            //if (Collider != null)
-                //Collider.Draw();
-        }
     }
 }
