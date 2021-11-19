@@ -15,6 +15,9 @@ namespace MathForGamesAssessment
             AbilitySpeed = speed;
         }
 
+        /// <summary>
+        /// Called when this ability starts
+        /// </summary>
         public override void Start()
         {
             Player.ShotCooldown = 0.05f;
@@ -24,6 +27,10 @@ namespace MathForGamesAssessment
             Player.Speed = AbilitySpeed;
         }
 
+        /// <summary>
+        /// Called every frame while this ability is active
+        /// </summary>
+        /// <param name="deltaTime"></param>
         public override void Update(float deltaTime)
         {
             if (AbilityTimer < AbilityDuration)

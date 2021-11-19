@@ -477,7 +477,282 @@ s218014
             * *Visibility:* public virtual
             * *Arguments:* Player player, Vector4 color, float duration     
     * **FILE:** Fortify
+        *Inherits from:* Ability  
+        * *Name:* Fortify(constructor)
+            * *Description:* takes in the stats that will be changed during this ability
+            * *Visibility:* public
+            * *Arguments:* (Player player, Vector4 color, float scale, float speed, float duration) : base(player, color, duration)  
+        * *Name:* Start(void)
+            * *Description:* Called when this ability is activated
+            * *Visibility:* public override
+            * *Arguments:* none       
+        * *Name:* Update(void)
+            * *Description:* Called every frame while this ability is active
+            * *Visibility:* public override
+            * *Arguments:* float deltaTime       
+    * **FILE:** ThrowGrenade.cs
         *Inherits from:* Ability
-        
-        
-    
+        * *Name:* ThrowGrenade(constructor)
+            * *Description:* Calls the base ablity's constructor
+            * *Visibility:* public override
+            * *Arguments:* (Player player, Vector4 abilityColor, float abilityDuration) : base(player, abilityColor, abilityDuration)    
+        * *Name:* Start(void)
+            * *Description:* Called when the throw grenade ability is started
+            * *Visibility:* public override
+            * *Arguments:* none      
+        * *Name:* Update(void)
+            * *Description:* Called every frame while this ability is active
+            * *Visibility:* public override
+            * *Arguments:* float deltaTime  
+    * **FILE:** Bullet.cs
+        *Inherits from:* Actor
+        * *Name:* _speed(float)
+            * *Description:* The speed that the bullet will travel
+            * *Visibility:* private 
+        * *Name:* _velocity(Vector3)
+            * *Description:* The vector that the actor will be translated by
+            * *Visibility:* private  
+        * *Name:* _timeAlive(float)
+            * *Description:* Variable used to track the time that the bullet has been in the scene
+            * *Visibility:* private 
+        * *Name:* _moveDirection(Vector3)
+            * *Description:* the direction that the bullet travels
+            * *Visibility:* private
+        * *Name:* _owner(Actor)
+            * *Description:* The actor that shot the bullet
+            * *Visibility:* private 
+        * *Name:* Owner(Actor)
+            * *Description:* property that gets the owner who shot the bullet
+            * *Visibility:* public 
+        * *Name:* MoveDirection(Vector3)
+            * *Description:* gets and sets the _moveDirection variable
+            * *Visibility:* public 
+        * *Name:* Bullet(constructor)
+            * *Description:* initializes the bullet's stats and adds the bullet to the current scene
+            * *Visibility:* public 
+            * *Arguments:* ( float speed, Actor owner) : base(owner.WorldPosition, Shape.SPHERE, Color.YELLOW, "Bullet")
+        * *Name:* Start(void)
+            * *Description:* Called when the bullet is added to the scene
+            * *Visibility:* public override
+            * *Arguments:* ( float speed, Actor owner) : base(owner.WorldPosition, Shape.SPHERE, Color.YELLOW, "Bullet") 
+        * *Name:* Update(void)
+            * *Description:* Called every frame to update the bullets position
+            * *Visibility:* public override
+            * *Arguments:* float deltaTime
+        * *Name:* OnCollision(void)
+            * *Description:* Gets called on collision with an actor
+            * *Visibility:* public override
+            * *Arguments:* Actor actor
+    * **FILE:** Grenade.cs
+        * *Inherits from:* Actor
+        * *Name:* _speed(float)
+            * *Description:* speed that the grenade will move at
+            * *Visibility:* private 
+        * *Name:* _owner(Actor)
+            * *Description:* The actor that threw the grenade
+            * *Visibility:* private 
+        * *Name:* _moveDirection(Vector3)
+            * *Description:* the direction that the grenade moves
+            * *Visibility:* private 
+        * *Name:* _velocity(Vector3)
+            * *Description:* the vector that the grenade will be translated by
+            * *Visibility:* private 
+        * *Name:* _gravity(Vector3)
+            * *Description:* the vector constantly applied to the grenade while it is in the air
+            * *Visibility:* private 
+        * *Name:* _throwHeight(float)
+            * *Description:* How high the grenade will be thrown
+            * *Visibility:* private 
+        * *Name:* Grenade(constructor)
+            * *Description:* Gives the grenade it's stats
+            * *Visibility:* public 
+            * *Arguments:* (float speed, float throwHeight, Actor owner) : base(owner.WorldPosition, Shape.SPHERE, Color.BLACK, "Grenade") 
+        * *Name:* Start(void)
+            * *Description:* Called wyhen the grenade is added to the scene
+            * *Visibility:* public override
+            * *Arguments:* none 
+        * *Name:* Update(void)
+            * *Description:* Called every frame to update the bullet
+            * *Visibility:* public override
+            * *Arguments:* float deltaTime 
+        * *Name:* ApplyGravity(void)
+            * *Description:* Applies gravity to the grenade's velocity
+            * *Visibility:* public
+            * *Arguments:* none 
+        * *Name:* IsGrounded(bool)
+            * *Description:* Checks if the grenade is grounded
+            * *Visibility:* bool
+            * *Arguments:* none 
+        * *Name:* End(void)
+            * *Description:* Called when the grenade ends
+            * *Visibility:* public override
+            * *Arguments:* none 
+        * *Name:* Start(void)
+            * *Description:* Called wyhen the grenade is added to the scene
+            * *Visibility:* public override
+            * *Arguments:* none 
+    * **FILE:** GrenadeExplosion
+        * *Inherits from:* Actor
+        * *Name:* _blastRadius(float)
+            * *Description:* how big the explosion's collision radius will be
+            * *Visibility:* private
+        * *Name:* _smokeTimer(float)
+            * *Description:* how long the explosion will last
+            * *Visibility:* private
+        * *Name:* GrenadeExplosion(constructor)
+            * *Description:* gives the grenade its stats and calls the base actor's constructor
+            * *Visibility:* public
+            * *Arguments:* (Grenade owner, float blastRadius) :base(new Vector3(owner.WorldPosition.X, owner.WorldPosition.Y + 4, owner.WorldPosition.Z), Shape.SPHERE, Raylib.ColorAlpha(Color.LIGHTGRAY, 0.7f), "Grenade Explosion") 
+        * *Name:* Start(void)
+            * *Description:* Called when the explosion occurs
+            * *Visibility:* public override
+            * *Arguments:* none 
+        * *Name:* Update(void)
+            * *Description:* Called every frame while the explosion is happening
+            * *Visibility:* public override
+            * *Arguments:* float deltaTime
+        * *Name:* Oncollision(void)
+            * *Description:* Is called on collision with another actor
+            * *Visibility:* public override
+            * *Arguments:* Actor actor
+    * **FILE:** AABBCollider
+        * *Inherits from:* Collider
+        * *Name:* _width(float)
+            * *Description:* the width of the collider
+            * *Visibility:* private    
+        * *Name:* _height(float)
+            * *Description:* the height of the collider
+            * *Visibility:* private    
+        * *Name:* _length(float)
+            * *Description:* the length of the collider
+            * *Visibility:* private    
+        * *Name:* Width(float)
+            * *Description:* property that allows getting and setting of the _width variable
+            * *Visibility:* public     
+        * *Name:* Height(float)
+            * *Description:* property that allows getting and setting of the _height variable
+            * *Visibility:*public    
+        * *Name:* Length(float)
+            * *Description:* property that allows getting and setting of the _length variable
+            * *Visibility:* public     
+        * *Name:* Left(float)
+            * *Description:* The farthest left x position of this collider
+            * *Visibility:* public  
+        * *Name:* Right(float)
+            * *Description:* The farthest right x position of this collider
+            * *Visibility:* public        
+        * *Name:* Top(float)
+            * *Description:* the highest y position of this collider
+            * *Visibility:* public     
+        * *Name:* Bottom(float)
+            * *Description:* The lowest y position of this collider
+            * *Visibility:* public     
+        * *Name:* Front(float)
+            * *Description:* the highest z position of this collider
+            * *Visibility:* public     
+        * *Name:* Back(float) 
+            * *Description:* the lowest z position of this collider
+            * *Visibility:* public     
+        * *Name:* AABBCollider(constructor)
+            * *Description:* sets the collider's stats
+            * *Visibility:* public    
+            * *Arguments:*  (float width, float height, float length, Actor owner) : base(owner, ColliderType.AABB) 
+        * *Name:* CheckCollisionAABB(bool)
+            * *Description:* Checks to see if a collision occured with another AABB collider
+            * *Visibility:* public override
+            * *Arguments:*  AABBCollider other
+        * *Name:* CheckCollisionCircle(bool)
+            * *Description:* checks to see if a collision occured with a circle collider
+            * *Visibility:* public override
+            * *Arguments:*  CircleCollider other 
+    * **FILE:** CircleCollider
+        * *Inherits from:* Collider
+        * *Name:* _collisionRadius(float)
+            * *Description:* The the collider's radius
+            * *Visibility:* private
+        * *Name:* CollisionRadius(float)
+            * *Description:* Allows getting and setting of the collision radius
+            * *Visibility:* public    
+        * *Name:* CircleCollider(constructor)
+            * *Description:* Sets the collider's stats
+            * *Visibility:* public    
+            * *Arguments:*  float collisionRadius, Actor owner
+        * *Name:* CheckCollisionCircle(bool)
+            * *Description:* Checks for collision with another circle collider
+            * *Visibility:* public override   
+            * *Arguments:*  CircleCollider other 
+        * *Name:* CheckCollisionAABB(bool)
+            * *Description:* Checks for collision with an AABB collider
+            * *Visibility:* public override   
+            * *Arguments:*  AABBCollider other
+    * **FILE:** Collider.cs
+        * *Name:* ColliderType(enum)
+            * *Description:* Stores the different types of colliders
+            * *Visibility:* public
+        * *Name:* _owner(Actor)
+            * *Description:* The actor this collider is attached to
+            * *Visibility:* private  
+        * *Name:* _colliderType(ColliderType)
+            * *Description:* The type of collider that this is
+            * *Visibility:* private 
+        * *Name:* ColliderType(ColliderType)
+            * *Description:* allows getting and setting of the _colliderType variable
+            * *Visibility:* public  
+        * *Name:* Owner(Actor)
+            * *Description:* allows getting and setting of thie _owner variable
+            * *Visibility:* public  
+        * *Name:* Collider(constructor)
+            * *Description:* initializes the collider's stats
+            * *Visibility:* public  
+            * *Arguments:*  Actor owner, ColliderType colliderType
+        * *Name:* CheckCollision(bool)
+            * *Description:* Checks collision with another collider
+            * *Visibility:* public  
+            * *Arguments:*  Actor other 
+        * *Name:* CheckCollisionCircle(bool)
+            * *Description:* Checks for collision with another circle collider
+            * *Visibility:* public virtual 
+            * *Arguments:*  CircleCollider other      
+        * *Name:* CheckCollisionAABB(bool)
+            * *Description:* Checks for collision with an AABB collider
+            * *Visibility:* public virtual   
+            * *Arguments:*  AABBCollider other
+    * **FILE:** Engine.cs
+        * *Name:* _applicationShouldClose(bool)
+            * *Description:* Controls whether or not the main game loops keeps getting called
+            * *Visibility:* private static  
+        * *Name:* _currentSceneIndex(int)
+            * *Description:* Controls the current scene
+            * *Visibility:* private static  
+        * *Name:* _scenes(Scene[])
+            * *Description:* contains all of the game's scenes
+            * *Visibility:* private
+        * *Name:* _stopwatch
+            * *Description:* Stopwatch used to track deltaTime
+            * *Visibility:* private
+        * *Name:* CurrentScene(Scene)
+            * *Description:* The current game scene
+            * *Visibility:* public static    
+        * *Name:* Camera(Camera)
+            * *Description:* The game's camera
+            * *Visibility:* public static  
+        * *Name:* Run(void)
+            * *Description:* Called to begin the application
+            * *Visibility:* public
+            * *Arguments:* none  
+        * *Name:* Start(void)
+            * *Description:* Called when the aplpication starts
+            * *Visibility:* private
+            * *Arguments:* none  
+        * *Name:* Draw(void)
+            * *Description:* Called every time the game loops to update visuals
+            * *Visibility:* private
+            * *Arguments:* none  
+        * *Name:* End(void)
+            * *Description:* Called when the application exits
+            * *Visibility:* private
+            * *Arguments:* none  
+        * *Name:* AddScene(Scene scene)
+            * *Description:* Called to begin the application
+            * *Visibility:* public
+            * *Arguments:* none  

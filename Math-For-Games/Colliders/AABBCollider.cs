@@ -31,10 +31,11 @@ namespace MathForGamesAssessment
         }
 
         public float Length
-        { 
-            get { return _length;}
+        {
+            get { return _length; }
             set { _length = value; }
         }
+
 
         /// <summary>
         /// The farthest left x position of this collider
@@ -61,7 +62,7 @@ namespace MathForGamesAssessment
         }
 
         /// <summary>
-        /// The lowest y position downwards of this collider
+        /// The lowest y position of this collider
         /// </summary>
         public float Bottom
         {
