@@ -37,18 +37,6 @@ namespace MathForGamesAssessment
             FontSize = fontSize;
             Font = Raylib.LoadFont("resources/fonts/alagard.png");
         }
-
-        public UIText(float x, float y, float z, Shape shape, string name, Color color)
-            : base(x, y, z, shape, color, name)
-        {
-            Text = "";
-            Width = 50;
-            Height = 50;
-            FontSize = 35;
-            FontColor = color;
-            Font = Raylib.LoadFont("resources/fonts/alagard.png");
-        }
-
         public override void Draw()
         {
             //Creating rectangle to use inside of Raylib's draw function

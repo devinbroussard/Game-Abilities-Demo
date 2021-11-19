@@ -841,9 +841,164 @@ s218014
             * *Visibility:* public  
             * *Arguments:* Actor[] Actor 
         * *Name:* RemoveUIElement(bool)
-            * *Description:* Adds an array of actors to the UI elements array
+            * *Description:* Removes an actor from the scene list of actors
             * *Visibility:* public  
-            * *Arguments:* Actor[] Actor 
-        
-        
-         
+            * *Arguments:* UIText Actor  '
+        * *Name:* RemoveActor(bool)
+            * *Description:* Removes an actor from the scene lists of actors
+            * *Visibility:* public  
+            * *Arguments:* Actor Actor  
+    * **FILE:** UIText.cs
+        * *Inherits from:* Actor
+        * *Name:* Text(string)
+            * *Description:* The text that will be drawn to the screen
+            * *Visibility:* public    
+        * *Name:* Width(int)
+            * *Description:* How wide the text box will be
+            * *Visibility:* public   
+        * *Name:* Height(int)
+            * *Description:* How tall the text box will be 
+            * *Visibility:* public   
+        * *Name:* FontSize(int)
+            * *Description:* The size of the text that will be drawn
+            * *Visibility:* public   
+        * *Name:* Font(Font)
+            * *Description:* The font that the text will be
+            * *Visibility:* public   
+        * *Name:* FontColor(Color)
+            * *Description:* The color of the text
+            * *Visibility:* public   
+        * *Name:* UIText(constructor)
+            * *Description:* Sets the starting values for the text box
+            * *Visibility:* public  
+            * *Arguments:*  (float x, float y, float z, Shape shape, string name, Color color, int width, int height, int fontSize, string text = "") : base(x, y, z, shape, color, name)
+        * *Name:* Draw(void)
+            * *Description:* Draws the text to the screen
+            * *Visibility:* public override  
+            * *Arguments:*  none
+    * **FILE:** Matrix3.cs
+        * *Name:* M00, M01, M02, M10, M11, M12, M20, M21, M22(float)
+            * *Description:* holds the matrix's values
+            * *Visibility:* public  
+        * *Name:* Matrix3(constructor)
+            * *Description:* Assigns the values of the matrix to the input given
+            * *Visibility:* public
+            * *Arguments:* float m00, float m01, float m02, float m10, float m11, float m12, float m20, float m21, float m22 
+        * *Name:* Identity(Matrix3)
+            * *Description:* Stores an identity matrix
+            * *Visibility:* public static  
+        * *Name:* CreateRotation(Matrix3)
+            * *Description:* Creates a new matrix that has been rotated by the given value in radians
+            * *Visibility:* public static 
+            * *Arguments:* float radians    
+        * *Name:* CreateTranslation(Matrix3)
+            * *Description:* Creates a new matrix that has been translated by the given value
+            * *Visibility:* public static 
+            * *Arguments:* float x, float y
+        * *Name:* CreateTranslation(Matrix3)
+            * *Description:* Creates a new matrix that has been rotated by the given value in radians
+            * *Visibility:* public static 
+            * *Arguments:* Vector2 translation 
+        * *Name:* CreateScale(Matrix3)
+            * *Description:* Creates a new matrix that has been scaled by the given values
+            * *Visibility:* public static 
+            * *Arguments:* float x, float y     
+        * *Name:* + (Matrix3)
+            * *Description:* Adds two matrices together
+            * *Visibility:* public static 
+            * *Arguments:* Matrix3 lhs, Matrix3 rhs
+        * *Name:* -(Matrix3)
+            * *Description:* Subtracts one matrix from another
+            * *Visibility:* public static 
+            * *Arguments:* Matrix3 lhs, Matrix3 rhs
+        * *Name:* *(Matrix3)
+            * *Description:* Multiplies two matrices together
+            * *Visibility:* public static 
+            * *Arguments:* Matrix3 lhs, Matrix3 rhs       
+        * *Name:* M00, M01, M02, M03, M10, M11, M12, M13, M20, M21, M22, M23, M30, M31, M32, M33(float)
+            * *Description:* Stores the values of the matrix
+            * *Visibility:* public     
+        * *Name:* Matrix4(constructor)
+            * *Description:* Assigns the values of the matrix to the input given
+            * *Visibility:* public 
+            * *Arguments:* float m00, float m01, float m02, float m03, float m10, float m11, float m12, float m20, float m21, float m22, float m23, float m30, float m31, float m32, float m33   
+        * *Name:* Identity(Matrix4)
+            * *Description:* Variable created to store an identity matrix
+            * *Visibility:* public static 
+        * *Name:* CreateRotationX(Matrix4)
+            * *Description:* creates a new matrix that has been rotated on the x axis by the given value in radians
+            * *Visibility:* public static 
+            * *Arguments:* float radians    
+        * *Name:* CreateRotationY(Matrix4)
+            * *Description:* creates a new matrix that has been rotated on the Y axis by the given value in radians
+            * *Visibility:* public static
+            * *Arguments:* float radians     
+        * *Name:* CreateRotationZ(Matrix4)
+            * *Description:* creates a new matrix that has been rotated on the Z axis by the given value in radians
+            * *Visibility:* public static
+            * *Arguments:* float radians          
+        * *Name:* CreateTranslation(Matrix4)
+            * *Description:* Creates a new matrix that has been translated by the given values
+            * *Visibility:* public static
+            * *Arguments:* float x, float y, float z     
+        * *Name:* CreateScale(Matrix4)
+            * *Description:* Creates a new matrix that has been scaled by the given values
+            * *Visibility:* public static
+            * *Arguments:* float x, float y, float z
+        * *Name:* +(Matrix4)
+            * *Description:* adds two matrices
+            * *Visibility:* public static
+            * *Arguments:* matrix lhs, matrix rhs
+        * *Name:* -(Matrix4)
+            * *Description:* subtracts one matrix from another
+            * *Visibility:* public static
+            * *Arguments:* Matrix4 lhs, Matrix4 rhs
+    * **FILE:** Vector2
+        * *Name:* x(float)
+            * *Description:* stores the x value of the vector
+            * *Visibility:* public   
+        * *Name:* y(float)
+            * *Description:* stores the y value of the vector
+            * *Visibility:* public   
+        * *Name:* Vector2(constructor)
+            * *Description:* sets the x and y values of the vector
+            * *Visibility:* public 
+            * *Arguments:* float x, float y  
+        * *Name:* Magnitude(float)
+            * *Description:* Gets the length of the vector
+            * *Visibility:* public   
+        * *Name:* Normalized(Vector2)
+            * *Description:* property that returns the normalized value of the vector2
+            * *Visibility:* public   
+         * *Name:* Normalize(Vector2)
+            * *Description:* changes this vector to have a magnitude of one
+            * *Visibility:* public 
+            * *Arguments:* none     
+        * *Name:* GetDotProduct(float)
+            * *Description:* returns the dot product of the first vector onto the second
+            * *Visibility:* public static
+            * *Arguments:* vector2 lhs, vector2 rhs     
+        * *Name:* GetDistance(float)
+            * *Description:* gets the distance between two vectors
+            * *Visibility:* public static 
+            * *Arguments:* vector2 lhs, vector2 rhs
+        * *Name:* +(Vector2)
+            * *Description:* adds two vectors
+            * *Visibility:* public static
+            * *Arguments:* vector2 lhs, vector2 rhs
+        * *Name:* -(Vector2)
+            * *Description:* subtracts the the rhs vector from the lhs vector
+            * *Visibility:* public static
+            * *Arguments:* vector2 lhs, vector2 rhs    
+        * *Name:* /(vector2)
+            * *Description:* divides a vector by a scalar
+            * *Visibility:* public static
+            * *Arguments:* vector2 vec2, float scalar              
+        * *Name:* ==(bool)
+            * *Description:* checks to see if two vectors are equal to each other
+            * *Visibility:* public static
+            * *Arguments:* vector2 lhs, vector2 rhs
+        * *Name:* != (bool)
+            * *Description:* Checks to see if two vectors are not equal to each other
+            * *Visibility:* public static
+            * *Arguments:* vector2 lhs, vector2 rhs         
