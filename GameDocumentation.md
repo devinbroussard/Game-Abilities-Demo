@@ -752,7 +752,98 @@ s218014
             * *Description:* Called when the application exits
             * *Visibility:* private
             * *Arguments:* none  
-        * *Name:* AddScene(Scene scene)
-            * *Description:* Called to begin the application
+        * *Name:* AddScene(int))
+            * *Description:* Adds a scene to the engine's scene array
             * *Visibility:* public
+            * *Arguments:* Scene scene 
+        * *Name:* SetCurrentScene(void)
+            * *Description:* Adds and sets the current scene to the scene given
+            * *Visibility:* public
+            * *Arguments:* Scene scene 
+        * *Name:* InitializeWindow(void)
+            * *Description:* Initializes the winow that raylib will use during the game
+            * *Visibility:* public
+            * *Arguments:* none    
+        * *Name:* CloseApplication(void)
+            * *Description:* A function that can be used globally to end the application
+            * *Visibility:* public static
             * *Arguments:* none  
+    * **FILE:** Program.cs
+        * *Name:* Main(void)
+            * *Description:* Calls the application's run function
+            * *Visibility:* static
+            * *Arguments:* none  
+    * **FILE:** Scene.cs
+        * *Name:* _actors(Actor[])
+            * *Description:* Array that stores all actors in the scene
+            * *Visibility:* private   
+        * *Name:* _UIElements(Actor[])
+            * *Description:* Array that stores UI stuff only
+            * *Visibility:* private   
+        * *Name:* SceneOneActors(Actor[])
+            * *Description:* contains all of the actors that scene one uses
+            * *Visibility:* public static  
+        * *Name:* SceneOneUIElements(Actor[])
+            * *Description:* contains all of the UI elements that scene one uses
+            * *Visibility:* public static 
+        * *Name:* Scene(constructor)
+            * *Description:* initializes arrays
+            * *Visibility:* public 
+        * *Name:* Actors(Actor[])
+            * *Description:* gets the _actors array
+            * *Visibility:* public 
+        * *Name:* Start(void)
+            * *Description:* Contains a virtual start fucntion that c an be used by inerriting classes
+            * *Visibility:* public virtual
+            * *Arguments:* none
+        * *Name:* Update(void)
+            * *Description:* Calls update for every actor in the scene, checks for collision, and start
+            * *Visibility:* public virtual 
+            * *Arguments:* float deltaTime
+        * *Name:* UpdateUI(void)
+            * *Description:* Updates all of the sccene's UI elements and starts them if they have not already been started
+            * *Visibility:* public virtual 
+            * *Arguments:* float deltaTime
+        * *Name:* Draw(void)
+            * *Description:* Calls all of the scene's actor's draw functions.
+            * *Visibility:* public virtual 
+            * *Arguments:* none
+        * *Name:* DrawUI(void)
+            * *Description:* Calls all of the scene's UI element's draw functions
+            * *Visibility:* public virtual
+            * *Arguments:* none
+        * *Name:* End(void)
+            * *Description:* Called at the end of a scene; removes all actors
+            * *Visibility:* public virtual      
+            * *Arguments:* none  
+        * *Name:* SceneOneActors(Actor[])
+            * *Description:* contains all of the actors that scene one uses
+            * *Visibility:* public static  
+            * *Arguments:* none
+        * *Name:* InitializeActors(void)
+            * *Description:* Initializes all actors for all scenes and stores them inside static arrays
+            * *Visibility:* public static  
+            * *Arguments:* none   
+        * *Name:* AddActor(void)
+            * *Description:* Adds an actor to the scenes list of actors
+            * *Visibility:* public
+            * *Arguments:* Actor actor
+        * *Name:* AddActor(void)
+            * *Description:* Adds an array of actors to the scenes list of actors
+            * *Visibility:* public  
+            * *Arguments:* Actor[] actors
+        * *Name:* AddUIElement(void)
+            * *Description:* Adds an array of actors to the UI elements array
+            * *Visibility:* public  
+            * *Arguments:* Actor[] Actor 
+        * *Name:* AddUIElement(void)
+            * *Description:* Adds an array of actors to the UI elements array
+            * *Visibility:* public  
+            * *Arguments:* Actor[] Actor 
+        * *Name:* RemoveUIElement(bool)
+            * *Description:* Adds an array of actors to the UI elements array
+            * *Visibility:* public  
+            * *Arguments:* Actor[] Actor 
+        
+        
+         
