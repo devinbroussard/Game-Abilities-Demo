@@ -1002,3 +1002,93 @@ s218014
             * *Description:* Checks to see if two vectors are not equal to each other
             * *Visibility:* public static
             * *Arguments:* vector2 lhs, vector2 rhs         
+    * **FILE:** Vector3
+        * *Name:* X, Y, Z(float)
+            * *Description:* The values of the vector
+            * *Visibility:* public 
+        * *Name:* Vector3(constructor)
+            * *Description:* Sets the values of the vector
+            * *Visibility:* public 
+            * *Arguments:*  float x, float y, float z
+        * *Name:* Magnitude(float)
+            * *Description:* Gets the length of the vector
+            * *Visibility:* public     
+        * *Name:* Normalized(Vector3)
+            * *Description:* returns the normalized value of the vector2
+            * *Visibility:* public      
+        * *Name:* Normalize(Vector3)
+            * *Description:* changes this vector to have a magnitude that is equal to one
+            * *Visibility:* public 
+            * *Arguments:* none    
+        * *Name:* DotProduct(float)
+            * *Description:* returns the dot product of this first vector onto the second
+            * *Visibility:* public static
+            * *Arguments:* (vector3 lhs, vector3 rhs)    
+        * *Name:* CrossProduct(vector3)
+            * *Description:* stores the x value of the vector
+            * *Visibility:* public static
+            * *Arguments:* Vector3 lhs, vector3 rhs
+        * *Name:* GetDistance(float)
+            * *Description:* returns the distance between two vectors
+            * *Visibility:* public static
+            * *Arguments:* vector3 lhs, vector3 rhs
+        * *Name:* +(vector3)
+            * *Description:* adds two vectors
+            * *Visibility:* public static
+            * *Arguments:* Vector3 lhs, vector3 rhs       
+        * *Name:* -(Vector3)
+            * *Description:* subtracts one vector from another
+            * *Visibility:* public static
+            * *Arguments:* vector3 lhs, vector3 rhs         
+        * *Name:* *(vector3)
+            * *Description:* multilies the vector's x and y values by the scalar
+            * *Visibility:* public static
+            * *Arguments:* vector3 vec3, float scalar
+        * *Name:* *(float)
+            * *Description:* multilies the vector's x and y values by the scalar
+            * *Visibility:* public static
+            * *Arguments:* float scalar, vector3 vec3   
+        * *Name:* /(float)
+            * *Description:* divides the vector's x and y values by the scalar
+            * *Visibility:* public static
+            * *Arguments:* vector3 vec3, float scalar
+        * *Name:* /(float)
+            * *Description:* divides the vector by the scalar
+            * *Visibility:* public static
+            * *Arguments:* float scalar, vector3 vec3      
+    * **FILE:** Vector4.cs
+        * *Name:* X, Y, Z, W(float)
+            * *Description:* The values of the matrix
+            * *Visibility:* public
+        * *Name:* Vector4(constructor)
+            * *Description:* sets the vector's values
+            * *Visibility:* public
+            * *Arguments:* float x, float y, float z, float w
+        * *Name:* Magnitude(float)
+            * *Description:* gets the length of the vector
+            * *Visibility:* public
+        * *Name:* Normalized(Vector4)
+            * *Description:* property that returns the normalized value of the vector2
+            * *Visibility:* public
+        * *Name:* Normalize(Vector4)
+            * *Description:* changes this vector to have a magnitude that is equal to one
+            * *Visibility:* public
+            * *Arguments:* none
+        * *Name:* CrossProduct(Vector4)
+            * *Description:* gets the cross product of one vector onto another
+            * *Visibility:* public static
+            * *Arguments:* Vector4 lhs, Vector4 rhs
+        * *Name:* DotProduct(float)
+            * *Description:* returns the dot product of the first vector onto the second
+            * *Visibility:* public static
+            * *Arguments:* vector4 lhs, vector4 rhs
+        * *Name:* GetDistance(Vector4 lhs, Vector4 rhs)
+            * *Description:* returns the distance between two vectors
+            * *Visibility:* public static
+            * *Arguments:* Vector4 lhs, Vector4 rhs
+        * *Name:* +(Vector4)
+            * *Description:* adds the x and y vlaues of the second vector onto the first
+            * *Visibility:* public static
+            * *Arguments:* Vector4 lhs, vector4 rhs               
+
+                      
