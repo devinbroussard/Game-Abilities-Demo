@@ -4,7 +4,7 @@ using System.Text;
 using Raylib_cs;
 using MathLibrary;
 
-namespace MathForGamesAssessment
+namespace GameAbilitiesDemo
 {
     class Grenade : Actor
     {

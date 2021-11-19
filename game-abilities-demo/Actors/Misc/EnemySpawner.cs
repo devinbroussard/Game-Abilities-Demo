@@ -5,7 +5,7 @@ using MathLibrary;
 using Raylib_cs;
 
 
-namespace MathForGamesAssessment
+namespace GameAbilitiesDemo
 {
     class EnemySpawner : Actor
     {

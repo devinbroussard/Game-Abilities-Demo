@@ -4,7 +4,7 @@ using System.Text;
 using MathLibrary;
 using Raylib_cs;
 
-namespace MathForGamesAssessment
+namespace GameAbilitiesDemo
 {
     /// <summary>
     /// Tag applied to an actor to determine what kind of actor it is

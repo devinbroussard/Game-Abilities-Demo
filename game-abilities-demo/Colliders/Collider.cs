@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MathForGamesAssessment
+namespace GameAbilitiesDemo
 {
     /// <summary>
     /// Stores the different types of colliders

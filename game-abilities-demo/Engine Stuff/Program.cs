@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MathForGamesAssessment
+namespace GameAbilitiesDemo
 {
     class Program
     {
