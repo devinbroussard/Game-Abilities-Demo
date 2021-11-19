@@ -9,7 +9,7 @@ namespace MathLibrary
     /// </summary>
     public struct Matrix3
     {
-        /// <summary>
+        /// <summary>s
         /// Variables that store the values of the matrix
         /// The first number is the row, and the second is the column
         /// </summary>
