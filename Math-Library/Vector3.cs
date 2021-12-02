@@ -59,6 +59,11 @@ namespace MathLibrary
             return (lhs.X * rhs.X) + (lhs.Y * rhs.Y) + (lhs.Z * rhs.Z);
         }
 
+        /// <summary>
+        /// Uses two vectors to get a new vector that is perpendicular to both 
+        /// </summary>
+        /// <param name="lhs">the left hand side of the operation</param>
+        /// <param name="rhs">the right hand side of the operation</param>
         public static Vector3 CrossProduct(Vector3 lhs, Vector3 rhs)
         {
             return new Vector3(

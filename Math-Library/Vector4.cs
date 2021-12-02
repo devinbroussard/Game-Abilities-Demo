@@ -52,6 +52,12 @@ namespace MathLibrary
             else return this /= Magnitude;
         }
 
+        /// <summary>
+        /// Uses two vectors to get a new vector that is perpendicular to both 
+        /// </summary>
+        /// <param name="lhs">the left hand side of the operation</param>
+        /// <param name="rhs">the right hand side of the operation</param>
+        /// <returns></returns>
         public static Vector4 CrossProduct(Vector4 lhs, Vector4 rhs)
         {
             return new Vector4(
